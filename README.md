@@ -1,0 +1,1 @@
+# BCSH2_BTEJA_SemestralniPrace
