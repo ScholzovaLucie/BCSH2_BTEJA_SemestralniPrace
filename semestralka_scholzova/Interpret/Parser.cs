@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,7 @@ namespace semestralka_scholzova.Interpret
                 if (tokens[index].type == EnumTokens.VARIABLE) block.Statements.Add(setVariable());
                 if (tokens[index].type == EnumTokens.IF) block.Statements.Add(ReadIfStatement());
                 if (tokens[index].type == EnumTokens.WHILE) block.Statements.Add(ReadWhileStatement());
+                if (tokens[index].type == EnumTokens.WRITE) block.Statements.Add(ReadWriteStatement());
             }
 
             return block;
@@ -46,8 +48,6 @@ namespace semestralka_scholzova.Interpret
             if (tokens[index++].type != EnumTokens.LET) throw new Exception();
 
             if (tokens[index].type == EnumTokens.VARIABLE) { }
-            else if (tokens[index].type != EnumTokens.WRITE) { }
-            else if (tokens[index].type != EnumTokens.VARIABLE) { }
             else throw new Exception();
             Token ident = tokens[index++];
 
@@ -120,22 +120,26 @@ namespace semestralka_scholzova.Interpret
             else { throw new Exception("Expected Function Type"); }
             FunctionType = tokens[index++];
             if (tokens[index++].type != EnumTokens.LEFT_BRACE) throw new Exception("Expected LEFT_BRACE");
-            Statement st = ReadeFunctionStatement();
-
-            if (FunctionType.type == EnumTokens.INT || FunctionType.type == EnumTokens.FLOAT || FunctionType.type == EnumTokens.BOOLEAN)
-            {
-                throw new Exception("not suported yet");
-            }
-
+            FunctionStatement st = ReadeFunctionStatement();
 
             Function fun = new Function(ident, FunctionType);
             fun.parameters = para;
-            fun.stmp = st;
+            fun.Statements = st.stmp;
+            fun.Functions = st.functions;
+            fun.vars = st.variables;
+            if (FunctionType.type==EnumTokens.INT || FunctionType.type == EnumTokens.FLOAT || FunctionType.type == EnumTokens.BOOLEAN || FunctionType.type == EnumTokens.STRING)
+            {
+                if (!st.GetList().OfType<ReturnStatement>().Any())
+                {
+                    throw new Exception();
+                }
+            }
+
             return fun;
 
         }
 
-        private Statement ReadeFunctionStatement()
+        private FunctionStatement ReadeFunctionStatement()
         {
             List<Statement> stmp = new List<Statement>();
             List<Let> variables = new List<Let>();
@@ -155,7 +159,11 @@ namespace semestralka_scholzova.Interpret
 
                 if (tokens[index].type == EnumTokens.VARIABLE) stmp.Add(setVariable());
 
-                if (tokens[index].type == EnumTokens.RETURN) break;
+                if (tokens[index].type == EnumTokens.RETURN) stmp.Add(ReadeReturnStatement());
+
+                if (tokens[index].type == EnumTokens.CONTINUE) break;
+
+                if (tokens[index].type == EnumTokens.BREAK) break;
             }
 
             if (tokens[index++].type != EnumTokens.RIGHT_BRACE) throw new Exception("Expected RIGHT_BRACE");
@@ -163,6 +171,25 @@ namespace semestralka_scholzova.Interpret
          
 
             return new FunctionStatement(stmp, variables, functions);
+        }
+
+        public Statement ReadeReturnStatement()
+        {
+            Token token = tokens[index++];
+            if (nasledujici() == "(")
+            {
+                ReturnStatement st = new ReturnStatement(new CallExpression(tokens[index++]));
+                if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                return st;  
+            }
+            else {
+                ReturnStatement st = new ReturnStatement(Expression());
+                if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                return st;  
+            }
+ 
+            throw new Exception("Expected RETURN");
+
         }
 
 
@@ -218,7 +245,9 @@ namespace semestralka_scholzova.Interpret
                 {
                     if (tokens[index].type == EnumTokens.VARIABLE)
                     {
-                        Statement st =  new SetStatement(idnet.literal, idnet.type, Expression());
+                        Statement st =  new SetStatement(idnet, idnet.lexeme, Expression());
+                        index++;
+                        index++;
                         if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
                         return st;
                     }
@@ -226,7 +255,7 @@ namespace semestralka_scholzova.Interpret
                     if (tokens[index].type == EnumTokens.SEMICOLON)
                     {
                         index--;
-                        Statement st =  new SetStatement(idnet.literal, idnet.type, Expression());
+                        Statement st =  new SetStatement(idnet, idnet.type, Expression());
                         if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception(); 
                  
                         return st;
@@ -237,7 +266,7 @@ namespace semestralka_scholzova.Interpret
                         index++;
                         if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception();
                         if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
-                        return new SetStatement(idnet.literal, idnet.type, new CallExpression(vare));
+                        return new SetStatement(idnet, idnet.type, new CallExpression(vare));
                     }
                             
                     if (tokens[index].type == EnumTokens.BOOLEAN)
@@ -449,6 +478,13 @@ namespace semestralka_scholzova.Interpret
                 }
             }
             return false;
+        }
+
+        private string nasledujici()
+        {
+            int newIndex = index;
+            newIndex++;
+            return tokens[newIndex].lexeme;
         }
     }
 }

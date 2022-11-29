@@ -11,9 +11,14 @@ namespace semestralka_scholzova.Interpret
         public Token iden;
 
         public object type;
+
         public List<Let> parameters;
 
-        public Statement stmp;
+        public List<Let> vars { get; set; }
+
+        public List<Statement> Statements { get; set; }
+
+        public List<Function> Functions { get; set; }
 
         public Function(Token ident, object type)
         {
@@ -21,6 +26,17 @@ namespace semestralka_scholzova.Interpret
             this.type = type;
         }
 
+        public void Execute(ExecutionContext ex)
+        {
+            foreach (Statement st in Statements)
+            {
+                st.Execute(ex);
+            }
+            foreach (Function func in Functions)
+            {
+                func.Execute(ex);
+            }
+        }
 
     }
 }

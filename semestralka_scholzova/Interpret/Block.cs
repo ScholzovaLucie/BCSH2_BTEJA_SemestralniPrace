@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace semestralka_scholzova.Interpret
 {
@@ -18,20 +19,19 @@ namespace semestralka_scholzova.Interpret
             Statements = new List<Statement>();
         }
 
-        public void execute()
+        public void execute(TextBox Console)
         {
             ProgramContext programContext = new ProgramContext();
             programContext.Functions = Functions;
-            ExecutionContext ex = new ExecutionContext(programContext, vars, null);
-           // stmt.Execute(ex);
-        }
-
-        public void execute(ExecutionContext ex)
-        {
-            ProgramContext programContext = new ProgramContext();
-            programContext.Functions = Functions;
-            ExecutionContext newex = new ExecutionContext(programContext, vars, ex);
-            //stmt.Execute(newex);
+            ExecutionContext ex = new ExecutionContext(programContext, vars, null, Console);
+            foreach (Statement st in Statements)
+            {
+                st.Execute(ex);
+            }
+            foreach (Function func in Functions)
+            {
+                func.Execute(ex);
+            }
         }
     }
 }

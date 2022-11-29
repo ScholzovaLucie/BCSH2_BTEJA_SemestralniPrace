@@ -6,7 +6,7 @@
         {
         }
 
-        public override double Evaluate(ExecutionContext ex)
+        public override object Evaluate(ExecutionContext ex)
         {
             throw new System.NotImplementedException();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace semestralka_scholzova.Interpret
 {
@@ -14,10 +15,12 @@ namespace semestralka_scholzova.Interpret
         public Block block;
         static bool isError = false;
         string readText;
+        TextBox CustomConsole;
 
-        public Program(string readText)
+        public Program(string readText, TextBox CustomConsole)
         {
             this.readText = readText;
+            this.CustomConsole = CustomConsole;
         }
 
         public List<Token> run()
@@ -30,22 +33,19 @@ namespace semestralka_scholzova.Interpret
 
             parser = new Parser(tokens);
             block = parser.Parse();
+            block.execute(CustomConsole);
 
             return tokens;
         }
 
-
-
-
-
         public static void Error(int line, String message)
         {
-            Console.WriteLine("Error at line " + line + ": " + message);
+            
             isError = true;
         }
         public static void Error(String message)
         {
-            Console.WriteLine("Error: " + message);
+           
             isError = true;
         }
 

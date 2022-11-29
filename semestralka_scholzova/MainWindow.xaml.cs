@@ -52,17 +52,11 @@ namespace semestralka_scholzova
             List <Token> tokens = null;
             if(textArea.Text.Length > 0)
             {
-                Program progr = new Program(textArea.Text);
+                Program progr = new Program(textArea.Text, Console);
                 tokens= progr.run();
-            }
-            string txt="";
-            foreach(Token token in tokens)
-            {
-                txt += token.ToString() + "\n";
-             }
-            Console.Text = txt;
+            } 
         }
 
-
+        
     }
 }

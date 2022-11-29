@@ -19,3 +19,24 @@ C:\Users\lucka\OneDrive - Univerzita Pardubice\UPCE\3.rocnik_1.semestr\BTEJA_BCS
 C:\Users\lucka\OneDrive - Univerzita Pardubice\UPCE\3.rocnik_1.semestr\BTEJA_BCSH2_semestralka\semestralka_scholzova\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.pdb
 C:\Users\lucka\OneDrive - Univerzita Pardubice\UPCE\3.rocnik_1.semestr\BTEJA_BCSH2_semestralka\semestralka_scholzova\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.genruntimeconfig.cache
 C:\Users\lucka\OneDrive - Univerzita Pardubice\UPCE\3.rocnik_1.semestr\BTEJA_BCSH2_semestralka\semestralka_scholzova\semestralka_scholzova\obj\Debug\net6.0-windows\ref\semestralka_scholzova.dll
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.csproj.AssemblyReference.cache
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova_MarkupCompile.cache
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova_MarkupCompile.lref
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.dll
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\refint\semestralka_scholzova.dll
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.pdb
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\bin\Debug\net6.0-windows\semestralka_scholzova.exe
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\bin\Debug\net6.0-windows\semestralka_scholzova.deps.json
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\bin\Debug\net6.0-windows\semestralka_scholzova.runtimeconfig.json
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\bin\Debug\net6.0-windows\semestralka_scholzova.dll
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\bin\Debug\net6.0-windows\semestralka_scholzova.pdb
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.g.resources
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.AssemblyInfoInputs.cache
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.AssemblyInfo.cs
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.csproj.CoreCompileInputs.cache
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\semestralka_scholzova.genruntimeconfig.cache
+C:\Users\lucka\Documents\skola\bteja_c#\semestralka_scholzova\obj\Debug\net6.0-windows\ref\semestralka_scholzova.dll
