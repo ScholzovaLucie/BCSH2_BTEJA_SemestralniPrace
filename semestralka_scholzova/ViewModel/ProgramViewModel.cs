@@ -1,6 +1,7 @@
 ﻿using semestralka_scholzova.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,7 @@ namespace semestralka_scholzova.ViewModel
             RunCommand = new MyICommand(RunClick);
             ImportCommand = new MyICommand(ImportClick);
             SaveCommand = new MyICommand(SaveClick);
+            LoadProgram();
         }
 
         private void ImportClick()
@@ -54,9 +56,19 @@ namespace semestralka_scholzova.ViewModel
 
         }
 
-        internal void Load()
+        public ObservableCollection<Program> Programs
         {
-            program.ReadeText = "";
+            get;
+            set;
+        }
+
+        public void LoadProgram()
+        {
+            ObservableCollection<Program> programs = new ObservableCollection<Program>();
+
+            programs.Add(program);
+
+            Programs = programs;
         }
     }
 }

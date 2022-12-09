@@ -35,7 +35,7 @@ namespace semestralka_scholzova
         {
             ViewModel.ProgramViewModel programViewModelObject =
                new ViewModel.ProgramViewModel();
-            programViewModelObject.Load();
+            programViewModelObject.LoadProgram();
 
             ProgramViewControl.DataContext = programViewModelObject;
         }

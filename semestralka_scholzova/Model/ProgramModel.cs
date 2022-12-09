@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,7 @@ namespace semestralka_scholzova.Model
         {
             get { return customConsole; }
 
-            private set
+            set
             {
                 if (customConsole != value)
                 {
@@ -98,6 +99,8 @@ namespace semestralka_scholzova.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+
+
 
     }
 }
