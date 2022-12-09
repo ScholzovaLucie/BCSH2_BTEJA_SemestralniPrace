@@ -58,7 +58,7 @@ namespace semestralka_scholzova.Model
 
         public void run()
         {
-
+            CustomConsole = null;
             tokens = new List<Token>();
 
             scanner = new Lexer(readText);

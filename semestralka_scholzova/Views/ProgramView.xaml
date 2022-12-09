@@ -14,9 +14,9 @@
     <UserControl.Resources>
         <DataTemplate x:Name="UserControl"  DataType = "{x:Type data:Program}">
             <StackPanel Orientation = "Vertical">
-                <TextBox Text="{Binding Path = ReadeText, Mode = OneWay}" Width="1000" Height="300" SelectionTextBrush="Gray" Background="Gray" BorderBrush="Gray" />
+                <TextBox Text="{Binding Path = ReadeText, Mode = TwoWay}" Width="1000" Height="300" SelectionTextBrush="White" Background="Gray" BorderBrush="White" IsEnabled="True" Cursor="Arrow" ForceCursor="True" SelectionBrush="White" Foreground="White" CaretBrush="White" AcceptsTab="True" AcceptsReturn="True" />
 
-                <TextBox Text="{Binding Path = CustomConsole, Mode = OneWay}" Width="1000" Height="300" SelectionTextBrush="Gray" Background="Gray" BorderBrush="Gray"/>
+                <TextBox Text="{Binding Path = CustomConsole, Mode = OneWay}" Width="1000" Height="300" SelectionTextBrush="Gray" Background="Gray" BorderBrush="Gray" Margin="0,10,0,0" Cursor="Arrow" IsReadOnly="True"/>
             </StackPanel>
         </DataTemplate>
 
