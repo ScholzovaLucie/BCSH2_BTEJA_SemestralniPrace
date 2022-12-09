@@ -43,7 +43,15 @@ namespace semestralka_scholzova.Model
         {
             get { return customConsole; }
 
-            
+            private set
+            {
+                if (customConsole != value)
+                {
+                    customConsole = value;
+                    RaisePropertyChanged("CustomConsole");
+                }
+            }
+
         }
 
 
@@ -61,7 +69,7 @@ namespace semestralka_scholzova.Model
             //Prepare();
             //Thread threadUI = new Thread(() =>
             //{
-            block.execute(CustomConsole);
+            CustomConsole = block.execute(CustomConsole);
 
             //});
             //threadUI.Start();

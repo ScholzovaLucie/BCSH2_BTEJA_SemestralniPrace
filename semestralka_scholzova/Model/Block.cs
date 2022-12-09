@@ -20,7 +20,7 @@ namespace semestralka_scholzova.Model
             Statements = new List<Statement>();
         }
 
-        public void execute(string Console)
+        public string execute(string Console)
         {
             ProgramContext programContext = new ProgramContext();
             programContext.Functions = Functions;
@@ -29,7 +29,7 @@ namespace semestralka_scholzova.Model
             {
                 st.Execute(ex);
             }
-
+            return ex.Console;
         }
     }
 }

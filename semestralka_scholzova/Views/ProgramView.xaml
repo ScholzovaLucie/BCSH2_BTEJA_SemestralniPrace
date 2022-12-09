@@ -30,7 +30,8 @@
             <Button x:Name="btnRun1" Command="{Binding RunCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Run" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0"/>
         
         </StackPanel>
-       
+        <ContentControl Content="ContentControl" HorizontalAlignment="Left" Margin="580,404,0,0" VerticalAlignment="Top"/>
+
 
     </Grid>
 
