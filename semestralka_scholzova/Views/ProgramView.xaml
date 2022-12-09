@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="semestralka_scholzova.Views.ProgramView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:semestralka_scholzova.Views"
+        xmlns:viewModel = "clr-namespace:semestralka_scholzova.ViewModel" 
+        xmlns:data = "clr-namespace:semestralka_scholzova.Model" 
+        xmlns:vml = "clr-namespace:semestralka_scholzova.VML" 
+        vml:ViewModelLocator.AutoHookedUpViewModel = "True"
+        mc:Ignorable="d"
+        Height="800" Width="1200">
+    
+    <UserControl.Resources>
+        <DataTemplate DataType = "{x:Type data:Program}">
+            <StackPanel Orientation = "Horizontal">
+                <TextBox Text="{Binding Path = ReadeText, Mode = OneWay}" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,30,15,380" Background="#FF373E40" BorderBrush="White" Foreground="White" SelectionBrush="White" SelectionTextBrush="#FFFCFF00" BorderThickness="0,0,0,0" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" UndoLimit="1001" IsReadOnlyCaretVisible="True" Height="350" MaxWidth="1170" MinHeight="350" MaxHeight="350"/>
+
+                <TextBox Text="{Binding Path = CustomConsole, Mode = OneWay}" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,385,15,24" Background="#FF373E40" BorderBrush="White" Foreground="White" SelectionBrush="White" SelectionTextBrush="#FFFCFF00" BorderThickness="0,0,0,0" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" UndoLimit="1001" IsReadOnlyCaretVisible="True" Height="350" MaxWidth="1170" MinHeight="350" MaxHeight="350"/>
+            </StackPanel>
+        </DataTemplate>
+
+    </UserControl.Resources>
+    
+    <Grid>
+
+        <StackPanel Orientation = "Vertical" Width="115" Height="802" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button x:Name="btnImport" Command="{Binding ImportCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Import" MinWidth="90" MinHeight="30" MaxWidth="90" MaxHeight="30" Margin="0,10,0,0"/>
+            <Button x:Name="btnSave" Command="{Binding SaveCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Save" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0" />
+            <Button x:Name="btnRun1" Command="{Binding RunCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Run" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0"/>
+        
+        </StackPanel>
+       
+
+    </Grid>
+
+</UserControl>

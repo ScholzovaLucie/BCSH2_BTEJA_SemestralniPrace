@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lucka\\Documents\\skola\\bteja_c#\\semestralka_scholzova\\semestralka_scholzova.csproj",
+      "projectUniqueName": "C:\\Users\\lucka\\Source\\Repos\\BCSH2_BTEJA_SemestralniPrace\\semestralka_scholzova\\semestralka_scholzova.csproj",
       "projectName": "semestralka_scholzova",
-      "projectPath": "C:\\Users\\lucka\\Documents\\skola\\bteja_c#\\semestralka_scholzova\\semestralka_scholzova.csproj",
+      "projectPath": "C:\\Users\\lucka\\Source\\Repos\\BCSH2_BTEJA_SemestralniPrace\\semestralka_scholzova\\semestralka_scholzova.csproj",
       "packagesPath": "C:\\Users\\lucka\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lucka\\Documents\\skola\\bteja_c#\\semestralka_scholzova\\obj\\",
+      "outputPath": "C:\\Users\\lucka\\Source\\Repos\\BCSH2_BTEJA_SemestralniPrace\\semestralka_scholzova\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

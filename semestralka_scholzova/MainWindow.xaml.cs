@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using semestralka_scholzova.Interpret;
+using semestralka_scholzova.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,39 +24,23 @@ namespace semestralka_scholzova
     /// </summary>
     public partial class MainWindow : Window
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private Perzistence per = new Perzistence();
-
-        public ICommand ImportCommand { get; private set; }
-
+       
 
         public MainWindow()
         {
             InitializeComponent();
-
-            
         }
 
-        private void ImportClick(object sender, RoutedEventArgs e)
+        private void ProgramViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            textArea.Text = per.Import();
-          
-        }
-        private void SaveClick(object sender, RoutedEventArgs e)
-        {
-            per.Save(textArea.Text);
-    
-        }
-        private void RunClick(object sender, RoutedEventArgs e)
-        {
-            List <Token> tokens = null;
-            if(textArea.Text.Length > 0)
-            {
-                Program progr = new Program(textArea.Text, Console);
-                tokens= progr.run();
-            } 
+            ViewModel.ProgramViewModel programViewModelObject =
+               new ViewModel.ProgramViewModel();
+            programViewModelObject.Load();
+
+            ProgramViewControl.DataContext = programViewModelObject;
         }
 
-        
+
+
     }
 }
