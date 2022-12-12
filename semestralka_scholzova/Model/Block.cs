@@ -25,10 +25,15 @@ namespace semestralka_scholzova.Model
             ProgramContext programContext = new ProgramContext();
             programContext.Functions = Functions;
             ExecutionContext ex = new ExecutionContext(programContext, vars, null, Console);
-            foreach (Statement st in Statements)
+            if(Statements != null)
             {
-                st.Execute(ex);
+                foreach (Statement st in Statements)
+                {
+                    if(st != null)
+                    st.Execute(ex);
+                }
             }
+          
             return ex.Console;
         }
     }

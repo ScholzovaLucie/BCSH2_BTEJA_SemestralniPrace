@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using semestralka_scholzova.Model;
+using semestralka_scholzova.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,8 +34,8 @@ namespace semestralka_scholzova
 
         private void ProgramViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.ProgramViewModel programViewModelObject =
-               new ViewModel.ProgramViewModel();
+            ProgramView programViewModelObject =
+               new ProgramView();
             programViewModelObject.LoadProgram();
 
             ProgramViewControl.DataContext = programViewModelObject;

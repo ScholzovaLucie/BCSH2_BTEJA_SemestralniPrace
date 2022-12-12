@@ -8,13 +8,15 @@ namespace semestralka_scholzova.Model
 {
     public class Function
     {
-        public Token iden;
+        public string iden;
 
         public object type;
 
         public object returnvalue { get; set; }
 
         public List<Let> parameters;
+
+        private bool returnDone = false;
 
         public List<object> parametersValues = new List<object>();
 
@@ -24,7 +26,7 @@ namespace semestralka_scholzova.Model
 
         public List<Function> Functions { get; set; }
 
-        public Function(Token ident, object type)
+        public Function(string ident, object type)
         {
             iden = ident;
             this.type = type;
@@ -41,7 +43,14 @@ namespace semestralka_scholzova.Model
             }
             foreach (Statement st in Statements)
             {
-                st.Execute(ex);
+
+                if (st.GetType() == typeof(ReturnStatement) || st.GetType() == typeof(ContinueStatemant) || st.GetType() == typeof(BreakeStatemant))
+                
+                    {
+                    st.Execute(ex);
+                    returnDone = true;
+                }
+                if (returnDone != true) st.Execute(ex);
             }
 
         }

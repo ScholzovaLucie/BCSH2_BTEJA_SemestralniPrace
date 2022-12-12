@@ -60,7 +60,7 @@ namespace semestralka_scholzova.Model
                         {
                             foreach (Function func in ex.pc.Functions)
                             {
-                                if (func.iden.lexeme.Equals(val))
+                                if (func.iden.Equals(val))
                                 {
                                     if (func.returnvalue == null)
                                     {
@@ -71,8 +71,10 @@ namespace semestralka_scholzova.Model
                                     }
                                     foreach (Statement st in func.Statements)
                                     {
-                                        if (st.GetType() == typeof(ReturnStatement))
-                                        {
+                                        if (st.GetType() == typeof(ReturnStatement) || st.GetType() == typeof(ContinueStatemant) || st.GetType() == typeof(BreakeStatemant))
+                                        
+                                            {
+                                            
                                             var.value = func.returnvalue;
                                         }
                                     }

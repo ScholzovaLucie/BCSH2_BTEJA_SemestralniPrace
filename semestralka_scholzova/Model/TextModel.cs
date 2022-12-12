@@ -11,9 +11,17 @@ namespace semestralka_scholzova.Model
     {
     }
 
-    public class Text : INotifyPropertyChanged
+    public class InputText : INotifyPropertyChanged
     {
         public string text;
+        public MyICommand DoneCommand { get; set; }
+       
+
+        public InputText()
+        {
+ DoneCommand = new MyICommand(doneClick);
+        }
+
 
         public string TextArea
         {
@@ -37,6 +45,12 @@ namespace semestralka_scholzova.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
+        }
+
+        private void doneClick()
+        {
+            text = text;
+            System.Windows.Threading.Dispatcher.Yield();
         }
     }
 }

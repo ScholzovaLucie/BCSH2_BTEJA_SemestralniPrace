@@ -8,6 +8,7 @@ namespace semestralka_scholzova.Model
         private List<ElseIfStatement> elseifstatement;
         private Statement elseStatement;
         private Condition con;
+        private bool returnDone = false;
 
         public IfStatement(List<Statement> statement, Condition con)
         {
@@ -29,7 +30,13 @@ namespace semestralka_scholzova.Model
             {
                 foreach (Statement s in statement)
                 {
-                    s.Execute(ex);
+                    if (s.GetType() == typeof(ReturnStatement)|| s.GetType() == typeof(ContinueStatemant)|| s.GetType() == typeof(BreakeStatemant)) {
+                        s.Execute(ex);
+                        if(s.GetType() == typeof(BreakeStatemant)) breakDone= true;
+                        if(s.GetType() == typeof(ContinueStatemant)) continuDone= true;
+                        returnDone = true;
+                    }
+                    if(returnDone!=true) s.Execute(ex);
                 }
             }
             else

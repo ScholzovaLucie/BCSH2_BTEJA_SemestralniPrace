@@ -22,8 +22,9 @@ namespace semestralka_scholzova.Model
         {
             foreach (Function func in ex.pc.Functions)
             {
-                if (func.iden.lexeme.Equals(ident))
+                if (func.iden.Equals(ident))
                 {
+                    if(func.returnvalue==null)
                     func.returnvalue = expression.Evaluate(ex);
                 }
             }

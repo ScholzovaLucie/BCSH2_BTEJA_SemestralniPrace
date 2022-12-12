@@ -1,30 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Controls;
-using semestralka_scholzova.Model;
+using System.Windows.Threading;
 
 namespace semestralka_scholzova.Model
 {
     public class PreogramModel{
 
        }
-    public class Program : INotifyPropertyChanged
+    public partial class Program : INotifyPropertyChanged
     {
         List<Token> tokens;
         Lexer scanner;
-        Parser parser;
+        public Parser parser;
         public Block block;
         static bool isError = false;
 
         private string readText;
         private string customConsole;
+
+        private AlgorithmBase algorithm = new AlgorithmBase();
 
         public string ReadeText
         {
@@ -58,6 +55,7 @@ namespace semestralka_scholzova.Model
 
         public void run()
         {
+
             CustomConsole = null;
             tokens = new List<Token>();
 
@@ -75,12 +73,12 @@ namespace semestralka_scholzova.Model
             //});
             //threadUI.Start();
 
-           
+
         }
+      
 
         public static void Error(int line, string message)
         {
-
             isError = true;
         }
         public static void Error(string message)
@@ -100,7 +98,6 @@ namespace semestralka_scholzova.Model
             }
         }
 
-
-
+       
     }
 }

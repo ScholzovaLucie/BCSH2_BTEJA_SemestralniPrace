@@ -14,7 +14,7 @@ namespace semestralka_scholzova.Model
         {
             foreach (Function Function in Functions)
             {
-                if (Function.iden.lexeme.Equals(proc)) { }
+                if (Function.iden.Equals(proc)) { }
             }
         }
 

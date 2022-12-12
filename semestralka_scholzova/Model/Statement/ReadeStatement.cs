@@ -21,9 +21,9 @@ namespace semestralka_scholzova.Model
             {
                 if (var.ident.Equals(token.lexeme))
                 {
-                    //ReadeFromConsole reade = new ReadeFromConsole();
-                    //string value = reade.reade();
-                    //var.value = value;
+                    ReadeFromConsole reade = new ReadeFromConsole();
+                    string value = reade.reade();
+                    var.value = value;
 
                 }
             }

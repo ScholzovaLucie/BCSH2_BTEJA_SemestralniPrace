@@ -21,7 +21,7 @@ namespace semestralka_scholzova.Model
 
             foreach (Function st in ex.pc.Functions)
             {
-                if (st.iden.lexeme.Equals(token.lexeme))
+                if (st.iden.Equals(token.lexeme))
                 {
                     foreach (object obj in parameters)
                     {

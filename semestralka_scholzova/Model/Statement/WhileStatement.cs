@@ -17,6 +17,19 @@ namespace semestralka_scholzova.Model
             while (con.Evaluate(ex) == true)
             {
                 statement.Execute(ex);
+                if (statement.breakDone == true)
+                {
+                    
+                    statement.breakDone = false;
+                    break;
+                }
+                if (statement.continuDone == true)
+                {
+                    statement.continuDone = false;
+                    
+                }
+                
+                
             }
         }
 

@@ -29,6 +29,8 @@ namespace semestralka_scholzova.Model
                 keywords.Add("if", EnumTokens.IF);
                 keywords.Add("or", EnumTokens.OR);
                 keywords.Add("print", EnumTokens.PRINT);
+                keywords.Add("break", EnumTokens.BREAK);
+                keywords.Add("continue", EnumTokens.CONTINUE);
                 keywords.Add("return", EnumTokens.RETURN);
                 keywords.Add("this", EnumTokens.THIS);
                 keywords.Add("var", EnumTokens.VAR);
@@ -50,7 +52,7 @@ namespace semestralka_scholzova.Model
                 keywords.Add("void", EnumTokens.VOID);
                 keywords.Add("random", EnumTokens.RANDOM);
                 keywords.Add("write", EnumTokens.WRITE);
-                keywords.Add("reade", EnumTokens.READ);
+                keywords.Add("read", EnumTokens.READ);
                 keywords.Add("string", EnumTokens.STRING);
             }
 

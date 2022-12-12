@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace semestralka_scholzova.Model
@@ -9,17 +10,27 @@ namespace semestralka_scholzova.Model
     public class ReadeFromConsole
     {
 
-        //public string reade()
-        //{
-        //    Window1 chldWindow = new Window1();
-        //    chldWindow.Show();
 
-        //    if (chldWindow.text != null)
-        //    {
-        //        return chldWindow.text;
-        //    }
-        //    return "";
-        //}
+        public string reade()
+        {
+           
+            
+          
+             Input chldWindow = new Input();
+             chldWindow.Show();
+           
+            System.Windows.Threading.Dispatcher.Run();
+
+
+             string text = chldWindow.inputText;
+
+
+
+
+
+
+            return text;
+        }
 
 
 

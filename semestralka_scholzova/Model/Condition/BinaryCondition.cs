@@ -39,14 +39,15 @@ namespace semestralka_scholzova.Model
                 if (!leftnew.Equals(rightnew)) return true;
                 else return false;
             }
-            throw new Exception("Not suported");
+            UserException exception = new UserException("Not suported");
+            return false;
         }
 
         private bool Equal(object left, object right)
         {
             if (left.GetType() != right.GetType())
             {
-                throw new Exception();
+                 UserException exception = new UserException();
             }
             if (left.GetType() == typeof(string))
             {
@@ -54,7 +55,7 @@ namespace semestralka_scholzova.Model
             }
             else
             {
-                return left == right;
+                return (int)left == (int)right;
             }
 
         }
@@ -63,11 +64,11 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                throw new Exception();
+                 UserException exception = new UserException();
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) throw new Exception();
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
                 if (left.GetType() == typeof(int)) return (int)left < (int)right;
             }
             return false;
@@ -77,11 +78,11 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                throw new Exception();
+                 UserException exception = new UserException();
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) throw new Exception();
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
                 if (left.GetType() == typeof(int)) return (int)left > (int)right;
             }
             return false;
@@ -91,7 +92,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                throw new Exception();
+                 UserException exception = new UserException();
             }
             if (left.GetType() == right.GetType())
             {
@@ -110,7 +111,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                throw new Exception();
+                 UserException exception = new UserException();
             }
             if (left.GetType() == right.GetType())
             {

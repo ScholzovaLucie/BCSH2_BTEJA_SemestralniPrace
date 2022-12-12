@@ -17,6 +17,8 @@ namespace semestralka_scholzova.ViewModel
         public MyICommand ImportCommand { get; set; }
         public MyICommand SaveCommand { get; set; }
 
+        private AlgorithmBase algorithm = new AlgorithmBase();
+
         public event PropertyChangedEventHandler PropertyChanged;
         private Perzistence per = new Perzistence();
         public UserControl MainWindow { get; }
@@ -47,7 +49,7 @@ namespace semestralka_scholzova.ViewModel
             //Prepare();
             //Thread threadUI = new Thread(() =>
             //{
-            if (program.ReadeText != "" )
+            if (program.ReadeText != null )
             {
                 program.run();
             }
@@ -70,5 +72,8 @@ namespace semestralka_scholzova.ViewModel
 
             Programs = programs;
         }
+
+
+        
     }
 }

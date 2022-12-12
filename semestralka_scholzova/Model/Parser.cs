@@ -1,4 +1,5 @@
 ﻿
+using semestralka_scholzova;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace semestralka_scholzova.Model
         public List<Token> tokens = new List<Token>();
         public int index = 0;
         Block block = new Block();
-
+        UserException exception;
+        bool chyba = false;
 
         public Parser(List<Token> tokens)
         {
@@ -29,6 +31,7 @@ namespace semestralka_scholzova.Model
         {
             while (index < tokens.Count - 1)
             {
+                if (chyba == true) goto nastalachyba;
                 if (tokens[index].type == EnumTokens.LET)
                 {
                     Statement st;
@@ -38,13 +41,15 @@ namespace semestralka_scholzova.Model
                     block.Statements.Add(st);
                 }
 
-                if (tokens[index].type == EnumTokens.FUNCTION) block.Functions.Add(ReadeFunction());
-                if (tokens[index].type == EnumTokens.VARIABLE) block.Statements.Add(setVariable());
-                if (tokens[index].type == EnumTokens.IF) block.Statements.Add(ReadIfStatement(""));
-                if (tokens[index].type == EnumTokens.WHILE) block.Statements.Add(ReadWhileStatement(""));
-                if (tokens[index].type == EnumTokens.WRITE) block.Statements.Add(ReadWriteStatement());
-            }
+                else if (tokens[index].type == EnumTokens.FUNCTION) block.Functions.Add(ReadeFunction());
+                else if (tokens[index].type == EnumTokens.VARIABLE) block.Statements.Add(setVariable());
+                else if (tokens[index].type == EnumTokens.IF) block.Statements.Add(ReadIfStatement(""));
+                else if (tokens[index].type == EnumTokens.WHILE) block.Statements.Add(ReadWhileStatement(""));
+                else if (tokens[index].type == EnumTokens.WRITE) block.Statements.Add(ReadWriteStatement());
 
+                else goto nastalachyba;
+            }
+            nastalachyba:
             return block;
         }
 
@@ -52,19 +57,18 @@ namespace semestralka_scholzova.Model
         {
             Let newVar;
 
-            if (tokens[index++].type != EnumTokens.LET) throw new Exception();
-
+            if (tokens[index++].type != EnumTokens.LET) { exception = new UserException(); chyba = true; return (null, null); }
             if (tokens[index].type == EnumTokens.VARIABLE) { }
-            else throw new Exception();
+            else exception = new UserException();
             Token ident = tokens[index++];
 
-            if (tokens[index++].type != EnumTokens.COLON) throw new Exception();
+            if (tokens[index++].type != EnumTokens.COLON) { exception = new UserException(); chyba = true; return (null, null); }
 
             if (tokens[index].type == EnumTokens.INT) { }
             else if (tokens[index].type == EnumTokens.FLOAT) { }
             else if (tokens[index].type == EnumTokens.BOOLEAN) { }
             else if (tokens[index].type == EnumTokens.STRING) { }
-            else throw new Exception();
+            else { exception = new UserException(); return (null, null); }
 
             Token type = tokens[index++];
             index++;
@@ -96,7 +100,7 @@ namespace semestralka_scholzova.Model
                 }
                 index++;
 
-                if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return (null, null); }
                 newVar = new Let(ident.literal, type.literal);
                 return (newVar, st);
 
@@ -104,7 +108,7 @@ namespace semestralka_scholzova.Model
             Expression ex = Expression();
             SetStatement setstmp = new SetStatement(ident, type.literal, ex);
 
-            if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+            if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return (null, null); }
 
             newVar = new Let(ident.literal, type.literal);
             return (newVar, setstmp);
@@ -113,56 +117,56 @@ namespace semestralka_scholzova.Model
 
         private Function ReadeFunction()
         {
-
+            UserException exception;
             Token FunctionType;
             List<Let> para = new List<Let>();
 
-            if (tokens[index++].type != EnumTokens.FUNCTION) throw new Exception("Expected FUNCTION");
-            if (tokens[index].type != EnumTokens.VARIABLE) throw new Exception("Expected VARIABLE");
+            if (tokens[index++].type != EnumTokens.FUNCTION) { exception = new UserException(); chyba = true; return null; }
+            if (tokens[index].type != EnumTokens.VARIABLE) { exception = new UserException(); chyba = true; return null; }
             Token ident = tokens[index++];
-            if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception("Expected LEFT_PAREN");
+            if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException(); chyba = true; return null; }
             if (tokens[index].type == EnumTokens.VARIABLE)
             {
                 Token par = tokens[index++];
-                if (tokens[index++].type != EnumTokens.COLON) throw new Exception("Expected COLON");
+                if (tokens[index++].type != EnumTokens.COLON) { exception = new UserException(); chyba = true; return null; }
                 if (tokens[index].type == EnumTokens.INT) { }
                 else if (tokens[index].type == EnumTokens.FLOAT) { }
                 else if (tokens[index].type == EnumTokens.BOOLEAN) { }
                 else if (tokens[index].type == EnumTokens.VOID) { }
                 else if (tokens[index].type == EnumTokens.STRING) { }
-                else { throw new Exception("Expected Type"); }
+                else { exception = new UserException("Expected Type"); }
                 Token type = tokens[index++];
 
                 para.Add(new Let(par.lexeme, type.literal, null));
 
                 while (tokens[index].type != EnumTokens.RIGHT_PAREN)
                 {
-                    if (tokens[index++].type != EnumTokens.COMMA) throw new Exception("Expected COMMA");
-                    if (tokens[index].type != EnumTokens.VARIABLE) throw new Exception("Expected VARIABLE");
+                    if (tokens[index++].type != EnumTokens.COMMA) { exception = new UserException(); chyba = true; return null; }
+                    if (tokens[index].type != EnumTokens.VARIABLE) { exception = new UserException(); chyba = true; return null; }
                     Token par2 = tokens[index++];
-                    if (tokens[index++].type != EnumTokens.COLON) throw new Exception("Expected COLON");
+                    if (tokens[index++].type != EnumTokens.COLON) { exception = new UserException(); chyba = true; return null; }
                     if (tokens[index].type == EnumTokens.INT) { }
                     else if (tokens[index].type == EnumTokens.FLOAT) { }
                     else if (tokens[index].type == EnumTokens.BOOLEAN) { }
                     else if (tokens[index].type == EnumTokens.STRING) { }
-                    else { throw new Exception("Expected Type"); }
+                    else { exception = new UserException("Expected Type"); }
                     Token type2 = tokens[index++];
                     para.Add(new Let(par2.lexeme, type2.literal, null));
                 }
-                if (tokens[index].type != EnumTokens.RIGHT_PAREN) throw new Exception();
-            }
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception();
-            if (tokens[index++].type != EnumTokens.COLON) throw new Exception("Expected COLON");
-            if (tokens[index].type == EnumTokens.INT) { }
+                if (tokens[index].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                }
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                if (tokens[index++].type != EnumTokens.COLON) { exception = new UserException("Expected COLON"); chyba = true; return null; }
+                if (tokens[index].type == EnumTokens.INT) { }
             else if (tokens[index].type == EnumTokens.FLOAT) { }
             else if (tokens[index].type == EnumTokens.BOOLEAN) { }
             else if (tokens[index].type == EnumTokens.VOID) { }
-            else { throw new Exception("Expected Function Type"); }
+            else { exception = new UserException("Expected Function Type"); chyba = true; return null; }
             FunctionType = tokens[index++];
-            if (tokens[index++].type != EnumTokens.LEFT_BRACE) throw new Exception("Expected LEFT_BRACE");
-            FunctionStatement st = ReadeFunctionStatement(ident.lexeme);
+            if (tokens[index++].type != EnumTokens.LEFT_BRACE) { exception = new UserException("Expected LEFT_BRACE"); chyba = true; return null; }
+                FunctionStatement st = ReadeFunctionStatement(ident.lexeme);
 
-            Function fun = new Function(ident, FunctionType);
+            Function fun = new Function(ident.lexeme, FunctionType);
             fun.parameters = para;
             fun.Statements = st.stmp;
             fun.Functions = st.functions;
@@ -171,7 +175,7 @@ namespace semestralka_scholzova.Model
             {
                 if (!st.GetList().OfType<ReturnStatement>().Any())
                 {
-                    throw new Exception();
+                    exception = new UserException();
                 }
             }
 
@@ -209,12 +213,33 @@ namespace semestralka_scholzova.Model
 
                 else if (tokens[index].type == EnumTokens.RETURN) stmp.Add(ReadeReturnStatement(ident));
 
-                else if (tokens[index].type == EnumTokens.CONTINUE) break;
 
-                else if (tokens[index].type == EnumTokens.BREAK) break;
+                else if(tokens[index].type == EnumTokens.CONTINUE)
+                {
+                    stmp.Add(new ContinueStatemant());
+                    index++;
+                    if (tokens[index++].type != EnumTokens.SEMICOLON)
+                    {
+                        exception = new UserException("Expected SEMICOLON");
+                        chyba = true;
+
+                    }
+                }
+
+                else if (tokens[index].type == EnumTokens.BREAK)
+                {
+                    stmp.Add(new BreakeStatemant());
+                    index++;
+                    if (tokens[index++].type != EnumTokens.SEMICOLON)
+                    {
+                        exception = new UserException("Expected SEMICOLON");
+                        chyba = true;
+
+                    }
+                }
             }
 
-            if (tokens[index++].type != EnumTokens.RIGHT_BRACE) throw new Exception("Expected RIGHT_BRACE");
+            if (tokens[index++].type != EnumTokens.RIGHT_BRACE) { exception = new UserException("Expected RIGHT_BRACE"); chyba = true; return null; }
 
 
 
@@ -223,65 +248,68 @@ namespace semestralka_scholzova.Model
 
         public Statement ReadeReturnStatement(string ident)
         {
+  
             Token token = tokens[index++];
             if (nasledujici() == "(")
             {
                 ReturnStatement st = new ReturnStatement(new CallExpression(tokens[index++]), ident);
-                if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
                 return st;
             }
             else
             {
                 ReturnStatement st = new ReturnStatement(Expression(), ident);
-                if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
                 return st;
             }
 
-            throw new Exception("Expected RETURN");
+            exception = new UserException("Expected RETURN");
 
         }
 
 
         public Statement ReadReadStatement(Token ident)
         {
+            UserException exception;
             if (tokens[index].type == EnumTokens.READ)
             {
                 ReadeStatement st = new ReadeStatement(ident);
                 index++;
-                if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception();
-                if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception();
-                if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                if (tokens[index++].type != EnumTokens.RIGHT_PAREN) {exception = new UserException(); chyba = true; return null; }
+                if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
                 return st;
             }
-            else throw new Exception("Expected READE");
+            else { exception = new UserException("Expected READE"); return null; }
         }
 
         public Statement ReadWriteStatement()
         {
+            UserException exception;
             if (tokens[index++].type == EnumTokens.WRITE)
             {
-                if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception("Expected LEFT_PAREN");
+                if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException("Expected LEFT_PAREN"); chyba = true; return null; }
 
                 if (tokens[index].type == EnumTokens.VARIABLE)
                 {
                     Statement st = new WriteStatement(Expression());
-                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-                    if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception("Expected SEMICOLON");
+                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException("Expected RIGHT_PAREN"); chyba = true; return null; }
+                    if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException("Expected SEMICOLON"); chyba = true; return null; }
                     return st;
                 }
 
                 else if (tokens[index].type == EnumTokens.STRING)
                 {
                     Statement st = new WriteStatement(new StringExpression(tokens[index++].lexeme));
-                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-                    if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception("Expected SEMICOLON");
+                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException("Expected RIGHT_PAREN"); chyba = true; return null; }
+                    if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException("Expected SEMICOLON"); chyba = true; return null; }
                     return st;
 
                 }
-                else throw new Exception("Expected WRITE");
+                else { exception = new UserException("Expected WRITE"); chyba = true; return null; }
 
             }
-            else throw new Exception("Expected WRITE");
+            else { exception = new UserException("Expected WRITE"); chyba = true; return null; }
 
 
         }
@@ -298,14 +326,14 @@ namespace semestralka_scholzova.Model
                     {
                         Statement st = new SetStatement(idnet, idnet.lexeme, Expression());
 
-                        if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                        if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
                         return st;
                     }
                     if (tokens[index].type == EnumTokens.RANDOM)
                     {
                         Statement st = new SetStatement(idnet, idnet.lexeme, Expression());
 
-                        if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                        if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
                         return st;
                     }
                     if (tokens[index].type == EnumTokens.READ)
@@ -317,24 +345,24 @@ namespace semestralka_scholzova.Model
                     {
                         index--;
                         Statement st = new SetStatement(idnet, idnet.type, Expression());
-                        if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                        if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
 
-                        return st;
+                            return st;
                     }
 
                     if (tokens[index].type == EnumTokens.LEFT_PAREN)
                     {
                         index++;
-                        if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception();
-                        if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
+                        if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                        if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
                         return new SetStatement(idnet, idnet.type, new CallExpression(vare));
                     }
 
                     if (tokens[index].type == EnumTokens.BOOLEAN)
                     {
                         Statement st = new SetStatement(vare, EnumTokens.BOOLEAN, Expression());
-                        if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
-                        return st;
+                        if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
+                            return st;
 
                     }
 
@@ -346,8 +374,8 @@ namespace semestralka_scholzova.Model
                     index--;
                     Token vare = tokens[index++];
                     List<object> list = new List<object>();
-                    if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception();
-                    EnumTokens[] types = { EnumTokens.VARIABLE, EnumTokens.INT, EnumTokens.STRING, EnumTokens.BOOLEAN, EnumTokens.FLOAT };
+                    if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                        EnumTokens[] types = { EnumTokens.VARIABLE, EnumTokens.INT, EnumTokens.STRING, EnumTokens.BOOLEAN, EnumTokens.FLOAT };
                     if (COntainsParameter(types))
                     {
 
@@ -365,9 +393,9 @@ namespace semestralka_scholzova.Model
 
                         }
                     }
-                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception();
-                    if (tokens[index++].type != EnumTokens.SEMICOLON) throw new Exception();
-                    CallStatement call = new CallStatement(vare);
+                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                    if (tokens[index++].type != EnumTokens.SEMICOLON) { exception = new UserException(); chyba = true; return null; }
+                        CallStatement call = new CallStatement(vare);
                     call.parameters = list;
                     return call;
 
@@ -376,7 +404,8 @@ namespace semestralka_scholzova.Model
 
             }
 
-            throw new Exception();
+            exception = new UserException();
+            return null;
         }
 
         private bool COntainsParameter(EnumTokens[] types)
@@ -393,11 +422,12 @@ namespace semestralka_scholzova.Model
 
         public Statement ReadIfStatement(string ident)
         {
-            if (tokens[index++].type != EnumTokens.IF) throw new Exception("Expected IF");
-            if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception("Expected LEFT_PAREN");
+            if (tokens[index++].type != EnumTokens.IF) { exception = new UserException("Expected IF"); chyba = true; return null; }
+            if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException("Expected LEFT_PAREN"); chyba = true; return null; }
+
             Condition con = Condition();
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-            if (tokens[index++].type != EnumTokens.LEFT_BRACE) throw new Exception("Expected LEFT_BRACE");
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+            if (tokens[index++].type != EnumTokens.LEFT_BRACE) { exception = new UserException("Expected LEFT_BRACE"); chyba = true; return null; }
             List<Statement> stmps;
             List<ElseIfStatement> elseifstmp;
             Statement elsestmp;
@@ -436,12 +466,32 @@ namespace semestralka_scholzova.Model
 
                 if (tokens[index].type == EnumTokens.VARIABLE) stmp.Add(setVariable());
 
-                if (tokens[index].type == EnumTokens.RETURN) break;
+                if (tokens[index].type == EnumTokens.RETURN) stmp.Add(ReadeReturnStatement(ident));
+
+                if (tokens[index].type == EnumTokens.CONTINUE) {
+                    stmp.Add(new ContinueStatemant()); 
+                    index++; 
+                    if (tokens[index++].type != EnumTokens.SEMICOLON) {
+                        exception = new UserException("Expected SEMICOLON"); 
+                        chyba = true; 
+                        
+                    } 
+                }
+
+                if (tokens[index].type == EnumTokens.BREAK) {
+                    stmp.Add(new BreakeStatemant()); 
+                    index++;
+                    if (tokens[index++].type != EnumTokens.SEMICOLON) { 
+                        exception = new UserException("Expected SEMICOLON"); 
+                        chyba = true; 
+                  
+                    } 
+                }
             }
 
-            if (tokens[index++].type != EnumTokens.RIGHT_BRACE) throw new Exception("Expected RIGHT_BRACE");
+            if (tokens[index++].type != EnumTokens.RIGHT_BRACE) { exception = new UserException("Expected RIGHT_BRACE"); chyba = true; return (null, null, null); }
 
-            if (tokens[index].type == EnumTokens.ELSEIF)
+                if (tokens[index].type == EnumTokens.ELSEIF)
             {
                 while (tokens[index].type != EnumTokens.ELSE) elseifstmp.Add(ReadeElseIfStatement(ident));
             }
@@ -453,11 +503,11 @@ namespace semestralka_scholzova.Model
 
         private ElseIfStatement ReadeElseIfStatement(string ident)
         {
-            if (tokens[index++].type != EnumTokens.ELSEIF) throw new Exception("Expected ELSEIF");
-            if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception("Expected LEFT_PAREN");
+            if (tokens[index++].type != EnumTokens.ELSEIF) { exception = new UserException(); chyba = true; return null; }
+            if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException(); chyba = true; return null; }
             Condition con = Condition();
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-            if (tokens[index++].type != EnumTokens.LEFT_BRACE) throw new Exception("Expected LEFT_BRACE");
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+            if (tokens[index++].type != EnumTokens.LEFT_BRACE) { exception = new UserException(); chyba = true; return null; }
 
             Statement stmp = ReadeFunctionStatement(ident);
 
@@ -466,9 +516,9 @@ namespace semestralka_scholzova.Model
 
         private Statement ReadeElseStatement(string ident)
         {
-            if (tokens[index++].type != EnumTokens.ELSE) throw new Exception("Expected ELSE");
+            if (tokens[index++].type != EnumTokens.ELSE) { exception = new UserException("Expected ELSE"); return null; }
 
-            if (tokens[index++].type != EnumTokens.LEFT_BRACE) throw new Exception("Expected LEFT_BRACE");
+            if (tokens[index++].type != EnumTokens.LEFT_BRACE) { exception = new UserException("Expected LEFT_BRACE"); return null; }
             Statement stmp = ReadeFunctionStatement(ident);
 
             return new ElseStatement(stmp);
@@ -476,11 +526,11 @@ namespace semestralka_scholzova.Model
 
         public Statement ReadWhileStatement(string ident)
         {
-            if (tokens[index++].type != EnumTokens.WHILE) throw new Exception("Expected WHILE");
-            if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception("Expected LEFT_PAREN");
+            if (tokens[index++].type != EnumTokens.WHILE) { exception = new UserException("Expected WHILE"); chyba = true; return null; }
+            if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException("Expected LEFT_PAREN"); chyba = true; return null; }
             Condition con = Condition();
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-            if (tokens[index++].type != EnumTokens.LEFT_BRACE) throw new Exception("Expected LEFT_BRACE");
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                if (tokens[index++].type != EnumTokens.LEFT_BRACE) { exception = new UserException("Expected LEFT_BRACE"); chyba = true; return null; }
 
             Statement stmnt = ReadeFunctionStatement(ident);
 
@@ -552,8 +602,17 @@ namespace semestralka_scholzova.Model
             else if (index != tokens.Count && tokens[index].type == EnumTokens.VARIABLE)
             {
                 Token act = tokens[index++];
-
-                expres = new VariableExpression(act.literal);
+                if (tokens[index].lexeme == "(")
+                {
+                    expres = new CallExpression(act.literal);
+                    if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                    if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+                }
+                else
+                {
+                    expres = new VariableExpression(act.literal);
+                }
+                
 
                 return expres;
             }
@@ -568,32 +627,32 @@ namespace semestralka_scholzova.Model
             }
             else if (index != tokens.Count && tokens[index++].type == EnumTokens.RANDOM)
             {
-                if (tokens[index++].type != EnumTokens.LEFT_PAREN) throw new Exception("Expected LEFT_PAREN");
-                if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-                return new VariableRandom();
+                if (tokens[index++].type != EnumTokens.LEFT_PAREN) { exception = new UserException(); chyba = true; return null; }
+        if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+        return new VariableRandom();
             }
 
-            else throw new Exception("Not suported");
-        }
+    else { exception = new UserException(); chyba = true; return  null; }
+}
 
         private Statement STRINGRetyping()
         {
             index++;
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
-            return new ToStringStatemant(tokens[index]);
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException(); chyba = true; return null; }
+    return new ToStringStatemant(tokens[index]);
         }
 
         private Statement FLOATRetyping()
         {
             index++;
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException("Expected RIGHT_PAREN"); chyba = true;  return null; }
             return new ToFloatStatemamant(tokens[index]);
         }
 
         private Statement INTRetyping()
         {
             index++;
-            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) throw new Exception("Expected RIGHT_PAREN");
+            if (tokens[index++].type != EnumTokens.RIGHT_PAREN) { exception = new UserException("Expected RIGHT_PAREN"); chyba = true;  return null; }
             return new ToIntStatemant(tokens[index]);
         }
 

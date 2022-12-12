@@ -8,7 +8,8 @@ namespace semestralka_scholzova.Model
 {
     public abstract class Statement
     {
-
+        public bool breakDone = false;
+        public bool continuDone = false;
         public abstract void Execute(ExecutionContext ex);
     }
 }

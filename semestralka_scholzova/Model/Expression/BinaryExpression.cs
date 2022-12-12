@@ -21,20 +21,20 @@ namespace semestralka_scholzova.Model
 
         public override object Evaluate(ExecutionContext ex)
         {
-            object result;
+            object result = null;
             object leftnew = left.Evaluate(ex);
             object rightnew = right.Evaluate(ex);
             if (operatorVar.type == EnumTokens.PLUS) result = PlusEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.MINUS) result = MinusEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.STAR) result = StarEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.SLASH) result = SlashEval(leftnew, rightnew);
-            else throw new Exception("Not suported");
+            else { UserException exception = new UserException("Not suported"); }
 
             return result;
         }
         private object PlusEval(object left, object right)
         {
-            if (left.GetType() != right.GetType()) throw new Exception();
+            if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }
             if (left.GetType() == right.GetType())
             {
                 if (left.GetType() == typeof(string))
@@ -48,10 +48,10 @@ namespace semestralka_scholzova.Model
 
         private object MinusEval(object left, object right)
         {
-            if (left.GetType() != right.GetType()) throw new Exception();
+            if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) throw new Exception();
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
                 if (left.GetType() == typeof(int)) return (int)left - (int)right;
             }
             return null;
@@ -73,7 +73,7 @@ namespace semestralka_scholzova.Model
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) throw new Exception();
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
                 if (left.GetType() == typeof(int)) return (int)left * (int)right;
             }
             return null;
@@ -81,10 +81,10 @@ namespace semestralka_scholzova.Model
 
         private object SlashEval(object left, object right)
         {
-            if (left.GetType() != right.GetType()) throw new Exception();
+            if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) throw new Exception();
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
                 if (left.GetType() == typeof(int)) return (int)left / (int)right;
             }
             return null;
