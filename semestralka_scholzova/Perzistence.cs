@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using semestralka_scholzova.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,19 +14,21 @@ namespace semestralka_scholzova
     {
         private string path;
 
-        public string Import()
+        public string Import(Program program)
         {
+
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = false;
             fileDialog.Filter = "ts files (*.ts)|*.ts|All files (*.*)|*.*";
             fileDialog.DefaultExt = ".ts";
-            Nullable<bool> result = fileDialog.ShowDialog();
+            bool? result = fileDialog.ShowDialog();
 
             if (result == true)
             {
                 path = fileDialog.FileName;
                 using (StreamReader sr = new StreamReader(path))
                 {
+                    program.CustomConsole += "Načteno\n";
                     return sr.ReadToEnd();
                 }
 
@@ -33,7 +36,7 @@ namespace semestralka_scholzova
             return "";
         }
 
-        public void Save(string text)
+        public void Save(string text, Program program)
         {
             if (path == null)
             {
@@ -41,7 +44,7 @@ namespace semestralka_scholzova
                 fileDialog.Multiselect = false;
                 fileDialog.Filter = "ts files (*.ts)|*.ts|All files (*.*)|*.*";
                 fileDialog.DefaultExt = ".ts";
-                Nullable<bool> result = fileDialog.ShowDialog();
+                bool? result = fileDialog.ShowDialog();
 
                 path = fileDialog.FileName;
             }
@@ -53,11 +56,11 @@ namespace semestralka_scholzova
 
                 writer.Write(text);
 
-                MessageBox.Show("Uloženo", "Uloženo", MessageBoxButton.OK);
+                program.CustomConsole += "Uloženo\n";
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Neuloženo", MessageBoxButton.OK);
+                program.CustomConsole += "Uloženo\n";
             }
 
             writer.Close();

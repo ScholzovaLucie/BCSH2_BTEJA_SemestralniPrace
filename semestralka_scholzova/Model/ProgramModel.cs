@@ -90,7 +90,7 @@ namespace semestralka_scholzova.Model
 
         public void run()
         {
-
+            ImportConsole = null;
             CustomConsole = null;
             tokens = new List<Token>();
 
@@ -102,7 +102,7 @@ namespace semestralka_scholzova.Model
 
             block.execute(this);
 
-            ImportConsole = "";
+            ImportConsole = null;
         }
       
 

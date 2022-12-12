@@ -8,12 +8,12 @@ namespace semestralka_scholzova.Model
         private List<ElseIfStatement> elseifstatement;
         private Statement elseStatement;
         private Condition con;
-        private bool returnDone = false;
 
         public IfStatement(List<Statement> statement, Condition con)
         {
             this.statement = statement;
             this.con = con;
+            
         }
 
         public IfStatement(List<Statement> statement, Condition con, List<ElseIfStatement> elseifstatemant, Statement elsestatement)
@@ -26,17 +26,20 @@ namespace semestralka_scholzova.Model
 
         public override void Execute(ExecutionContext ex)
         {
+            continuDone = false;
+            returnDone = false;
+            breakDone = false;
             if (con.Evaluate(ex) == true)
             {
                 foreach (Statement s in statement)
                 {
-                    if (s.GetType() == typeof(ReturnStatement)|| s.GetType() == typeof(ContinueStatemant)|| s.GetType() == typeof(BreakeStatemant)) {
+                    if (s.GetType() == typeof(EmptyReturnStatemant)|| s.GetType() == typeof(ContinueStatemant)|| s.GetType() == typeof(BreakeStatemant)) {
                         s.Execute(ex);
                         if(s.GetType() == typeof(BreakeStatemant)) breakDone= true;
                         if(s.GetType() == typeof(ContinueStatemant)) continuDone= true;
-                        returnDone = true;
+                        if(s.GetType()== typeof(EmptyReturnStatemant)) returnDone = true;
                     }
-                    if(returnDone!=true) s.Execute(ex);
+                    if(returnDone!=true&& breakDone!=true&& continuDone!=true) s.Execute(ex);
                 }
             }
             else
@@ -47,13 +50,28 @@ namespace semestralka_scholzova.Model
                     {
                         if (s.con.Evaluate(ex) == true)
                         {
-                            s.Execute(ex);
+                            if (s.GetType() == typeof(ReturnStatement) || s.GetType() == typeof(ContinueStatemant) || s.GetType() == typeof(BreakeStatemant))
+                            {
+                                s.Execute(ex);
+                                if (s.GetType() == typeof(BreakeStatemant)) breakDone = true;
+                                if (s.GetType() == typeof(ContinueStatemant)) continuDone = true;
+                                returnDone = true;
+                            }
+                            if (returnDone != true) s.Execute(ex);
+                            if (s.continuDone == true) continuDone = true;
+                            if (s.breakDone == true) breakDone = true;
                             goto splneno;
                         }
                     }
                 }
 
-                if (elseStatement != null) elseStatement.Execute(ex);
+                if (elseStatement != null)
+                {
+
+                        elseStatement.Execute(ex);
+                        if (elseStatement.continuDone == true) continuDone = true;
+                        if(elseStatement.breakDone == true) breakDone = true;
+                }
                 splneno:;
             }
 

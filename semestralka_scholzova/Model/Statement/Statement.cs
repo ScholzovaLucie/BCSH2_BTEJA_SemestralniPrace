@@ -10,6 +10,8 @@ namespace semestralka_scholzova.Model
     {
         public bool breakDone = false;
         public bool continuDone = false;
+        public bool returnDone = false;
+
         public abstract void Execute(ExecutionContext ex);
     }
 }

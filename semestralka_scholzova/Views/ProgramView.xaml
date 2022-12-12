@@ -18,7 +18,7 @@
 
                 <TextBox Text="{Binding Path = CustomConsole, Mode = OneWay}" Width="1050" Height="170" SelectionTextBrush="Gray" Background="Gray" BorderBrush="Gray" Margin="0,10,0,0" Cursor="Arrow" IsReadOnly="True"/>
                 <TextBlock Text="Vstup" />
-                <TextBox Text="{Binding Path = ImportConsole, Mode = TwoWay}" Width="1050" Height="170" SelectionTextBrush="White" Background="Gray" BorderBrush="White" Margin="0,10,0,0" Cursor="Arrow"  IsReadOnly="{Binding  Path = Editable}" SelectionBrush="White" Foreground="White" CaretBrush="White" AcceptsTab="True" AcceptsReturn="True"/>
+                <TextBox Text="{Binding Path = ImportConsole, Mode = TwoWay}" Width="1050" Height="170" SelectionTextBrush="White" Background="Gray" BorderBrush="White" Margin="0,10,0,0" Cursor="Arrow"  IsReadOnly="{Binding  Path = Editable}" SelectionBrush="White" Foreground="White" CaretBrush="White" AcceptsTab="True" />
             </StackPanel>
         </DataTemplate>
 

@@ -25,11 +25,7 @@ namespace semestralka_scholzova.Views
     public partial class ProgramView : UserControl
     {
         private AlgorithmBase algorithm = new AlgorithmBase();
-        private ProgramViewModel data = null;
-        public int RequestsCount { get; set; } = 10;
-        private int solvedCount = 0;
-        private int cauntOfTask = 0;
-
+       
         public MyICommand RunCommand { get; set; }
         public MyICommand ImportCommand { get; set; }
         public MyICommand SaveCommand { get; set; }
@@ -51,12 +47,12 @@ namespace semestralka_scholzova.Views
 
         private void ImportClick()
         {
-            program.ReadeText = per.Import();
+            program.ReadeText = per.Import(program);
 
         }
         private void SaveClick()
         {
-            per.Save(program.ReadeText);
+            per.Save(program.ReadeText, program);
 
         }
 

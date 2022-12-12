@@ -20,6 +20,9 @@ namespace semestralka_scholzova.Model
         public override void Execute(ExecutionContext ex)
         {
             if (con.Evaluate(ex)) statement.Execute(ex);
+            if (statement.continuDone) continuDone = true;
+            if (statement.breakDone) breakDone = true;
+            if (statement.returnDone) returnDone = true;
         }
     }
 }

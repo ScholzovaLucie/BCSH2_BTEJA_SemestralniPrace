@@ -41,7 +41,8 @@ namespace semestralka_scholzova.Model
                 keywords.Add("call", EnumTokens.CALL);
                 keywords.Add("then", EnumTokens.THEN);
                 keywords.Add("do", EnumTokens.DO);
-                keywords.Add("odd", EnumTokens.ODD);
+                keywords.Add("readFile", EnumTokens.READFILE);
+                keywords.Add("writeFile", EnumTokens.WRITEFILE);
                 keywords.Add("int", EnumTokens.INT);
                 keywords.Add("float", EnumTokens.FLOAT);
                 keywords.Add("boolean", EnumTokens.BOOLEAN);
@@ -90,6 +91,7 @@ namespace semestralka_scholzova.Model
                 case '*': AddToken(EnumTokens.STAR); break;
                 case '?': AddToken(EnumTokens.QUESTION_MARK); break;
                 case '#': AddToken(EnumTokens.HASHTAG); break;
+                case '%': AddToken(EnumTokens.ODD); break;
                 case '"': createString(); break;
                 case '!': AddToken(Match('=') ? EnumTokens.BANG_EQUAL : EnumTokens.BANG); break;
                 case '=': AddToken(Match('=') ? EnumTokens.EQUAL_EQUAL : EnumTokens.EQUAL); break;

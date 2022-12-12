@@ -17,6 +17,8 @@ namespace semestralka_scholzova.Model
         public List<Let> parameters;
 
         private bool returnDone = false;
+        private bool continuDone = false;
+        private bool breakDone = false;
 
         public List<object> parametersValues = new List<object>();
 
@@ -37,21 +39,45 @@ namespace semestralka_scholzova.Model
             int i = 0;
             foreach (Let let in parameters)
             {
-                let.value = parametersValues[i];
-                vars.Add(let);
+                if(vars.Contains(let))
+                {
+                    foreach (Let var in vars)
+                    {
+                        if(var.ident == let.ident)
+                        {
+                            var.value = parametersValues[i];
+                        }
+                    }
+                }
+                else
+                {
+                    let.value = parametersValues[i];
+                    vars.Add(let);
                 i++;
+                }
+                
             }
+            parametersValues = new List<object>();
             foreach (Statement st in Statements)
             {
 
                 if (st.GetType() == typeof(ReturnStatement) || st.GetType() == typeof(ContinueStatemant) || st.GetType() == typeof(BreakeStatemant))
-                
                     {
                     st.Execute(ex);
+                    if (st.GetType() == typeof(BreakeStatemant)) breakDone = true;
+                    if (st.GetType() == typeof(ContinueStatemant)) continuDone = true;
                     returnDone = true;
                 }
                 if (returnDone != true) st.Execute(ex);
+                if (st.continuDone == true) { st.continuDone = false;  continuDone = true; }
+                if (st.breakDone == true) { st.breakDone = false; return; }
+                if (st.returnDone == true) { returnDone = true; return; }
             }
+
+            returnDone = false;
+            breakDone = false;
+            continuDone = false;
+            parametersValues = new List<object>();
 
         }
 

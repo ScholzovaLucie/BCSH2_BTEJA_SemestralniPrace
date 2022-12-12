@@ -11,6 +11,7 @@ namespace semestralka_scholzova.Model
         private Statement statement;
 
 
+
         public ElseStatement(Statement statement)
         {
             this.statement = statement;
@@ -20,6 +21,9 @@ namespace semestralka_scholzova.Model
         public override void Execute(ExecutionContext ex)
         {
             statement.Execute(ex);
+            if(statement.continuDone) continuDone= true;
+            if(statement.breakDone)breakDone= true;
+            if (statement.returnDone) returnDone = true;
         }
     }
 }

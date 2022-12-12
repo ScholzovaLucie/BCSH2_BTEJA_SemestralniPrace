@@ -52,7 +52,7 @@ namespace semestralka_scholzova.Model
                         {
                             var.value = val;
                         }
-                        else if (var.type.Equals("boolean") && (val == "true" || val == "false"))
+                        else if (var.type.Equals("boolean") && ((bool)val == true || (bool)val == false))
                         {
                             var.value = val;
                         }

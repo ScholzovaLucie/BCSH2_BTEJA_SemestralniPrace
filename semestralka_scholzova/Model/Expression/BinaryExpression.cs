@@ -28,10 +28,21 @@ namespace semestralka_scholzova.Model
             else if (operatorVar.type == EnumTokens.MINUS) result = MinusEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.STAR) result = StarEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.SLASH) result = SlashEval(leftnew, rightnew);
+            else if (operatorVar.type == EnumTokens.ODD) result = OddEval(leftnew,rightnew);
             else { UserException exception = new UserException("Not suported"); }
 
             return result;
         }
+
+        private object OddEval(object left, object right)
+        {
+            if(left.GetType() == typeof(int))
+            {
+                return (int)left%(int)right;
+            }
+            return null;
+        }
+
         private object PlusEval(object left, object right)
         {
             if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }

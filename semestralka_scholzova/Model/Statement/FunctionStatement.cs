@@ -12,9 +12,6 @@ namespace semestralka_scholzova.Model
 
         public List<Let> variables;
         public List<Function> functions;
-        private bool returnDone = false;
-
-        private bool brakeDone = false;
 
         public FunctionStatement(List<Statement> stmp, List<Let> variables, List<Function> functions)
         {
@@ -39,21 +36,42 @@ namespace semestralka_scholzova.Model
                     s.Execute(ex);
                     if (s.GetType() == typeof(BreakeStatemant))
                     {
-                        brakeDone= true;
+                        breakDone= true;
                     }
+                    if(s.GetType() == typeof(ContinueStatemant)) continuDone= true;
                     returnDone = true;
                 }
                 if (returnDone != true && continuDone != true) s.Execute(ex);
-                if(s.breakDone == true)
+                if(breakDone == true)
+                {
+                    s.breakDone= true;
+                    return;
+                }
+                if (continuDone == true)
+                {
+                    s.continuDone = true;
+                    continuDone = true;
+                    return;
+                }
+                if(returnDone == true)
+                {
+                    s.returnDone = true;
+                    returnDone= true;
+                    return;
+                }
+                if (s.continuDone == true){
+                    s.continuDone = false;
+                    return;
+                }
+                if (s.breakDone == true)
                 {
                     breakDone= true;
-                    break;
+                    return;
                 }
-                if (s.continuDone == true)
+                if(s.returnDone == true)
                 {
-                    s.continuDone = false;
-                    continuDone = true;
-                    break;
+                    returnDone = true;
+                    return;
                 }
             }
 

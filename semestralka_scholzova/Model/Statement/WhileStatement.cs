@@ -21,16 +21,23 @@ namespace semestralka_scholzova.Model
                 {
                     
                     statement.breakDone = false;
-                    break;
+                    return;
                 }
                 if (statement.continuDone == true)
                 {
                     statement.continuDone = false;
                     
                 }
+                if(statement.returnDone== true)
+                {
+                    returnDone = true;
+                    return;
+                }
                 
                 
             }
+            statement.breakDone = false;
+            statement.continuDone = false;
         }
 
 
