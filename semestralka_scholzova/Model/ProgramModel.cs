@@ -21,7 +21,14 @@ namespace semestralka_scholzova.Model
         private string readText;
         private string customConsole;
 
-        private AlgorithmBase algorithm = new AlgorithmBase();
+        private string importConsole;
+
+        private bool editable = true;
+
+        public Program()
+        {
+            Editable = true;
+        }
 
         public string ReadeText
         {
@@ -52,6 +59,34 @@ namespace semestralka_scholzova.Model
 
         }
 
+        public string ImportConsole
+        {
+            get { return importConsole; }
+
+            set
+            {
+                if (importConsole != value)
+                {
+                    importConsole = value;
+                    RaisePropertyChanged("ImportConsole");
+                }
+            }
+
+        }
+
+        public bool Editable
+        {
+            get { return editable; }
+            set
+            {
+                if (editable != value)
+                {
+                    editable = value;
+                    RaisePropertyChanged("Editable");
+                }
+            }
+        }
+
 
         public void run()
         {
@@ -65,15 +100,9 @@ namespace semestralka_scholzova.Model
             parser = new Parser(tokens);
             block = parser.Parse();
 
-            //Prepare();
-            //Thread threadUI = new Thread(() =>
-            //{
-            CustomConsole = block.execute(CustomConsole);
+            block.execute(this);
 
-            //});
-            //threadUI.Start();
-
-
+            ImportConsole = "";
         }
       
 

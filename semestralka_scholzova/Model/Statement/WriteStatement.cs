@@ -18,8 +18,15 @@ namespace semestralka_scholzova.Model
         public override void Execute(ExecutionContext ex)
         {
             object value = expression.Evaluate(ex);
-            ex.Console += value.ToString();
-            ex.Console += "\n";
+            if (value != null)
+            {
+                ex.program.CustomConsole += value.ToString();
+                ex.program.CustomConsole += "\n";
+            }
+            else{
+                ex.program.CustomConsole += "chyba ve výpisu";
+            }
+
         }
     }
 }

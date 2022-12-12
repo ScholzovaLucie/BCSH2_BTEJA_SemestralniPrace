@@ -13,14 +13,16 @@ namespace semestralka_scholzova.Model
         public List<Let> vars { get; set; }
         public ExecutionContext global { get; set; }
 
-        public string Console;
+        public Program program;
 
-        public ExecutionContext(ProgramContext pc, List<Let> vars, ExecutionContext global, string Console)
+  
+
+        public ExecutionContext(ProgramContext pc, List<Let> vars, ExecutionContext global, Program program)
         {
             this.pc = pc;
             this.vars = vars;
             this.global = global;
-            this.Console = Console;
+            this.program = program;
         }
 
     }

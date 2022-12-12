@@ -16,20 +16,11 @@ namespace semestralka_scholzova.Model
            
             
           
-             Input chldWindow = new Input();
-             chldWindow.Show();
-           
-            System.Windows.Threading.Dispatcher.Run();
+            
+         
 
 
-             string text = chldWindow.inputText;
-
-
-
-
-
-
-            return text;
+            return "";
         }
 
 

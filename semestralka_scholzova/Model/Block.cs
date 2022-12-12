@@ -20,11 +20,11 @@ namespace semestralka_scholzova.Model
             Statements = new List<Statement>();
         }
 
-        public string execute(string Console)
+        public void execute(Program program)
         {
             ProgramContext programContext = new ProgramContext();
             programContext.Functions = Functions;
-            ExecutionContext ex = new ExecutionContext(programContext, vars, null, Console);
+            ExecutionContext ex = new ExecutionContext(programContext, vars, null, program);
             if(Statements != null)
             {
                 foreach (Statement st in Statements)
@@ -34,7 +34,7 @@ namespace semestralka_scholzova.Model
                 }
             }
           
-            return ex.Console;
+          
         }
     }
 }

@@ -62,7 +62,7 @@ namespace semestralka_scholzova {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/semestralka_scholzova;component/input.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/semestralka_scholzova;V1.0.0.0;component/input.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Input.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
