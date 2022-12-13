@@ -19,7 +19,7 @@ namespace semestralka_scholzova
 
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Multiselect = false;
-            fileDialog.Filter = "ts files (*.ts)|*.ts|All files (*.*)|*.*";
+            fileDialog.Filter = "ts files (*.ts)|*.ts|txt files (*.txt)|*.txt|All files (*.*)|*.*";
             fileDialog.DefaultExt = ".ts";
             bool? result = fileDialog.ShowDialog();
 
@@ -42,7 +42,7 @@ namespace semestralka_scholzova
             {
                 OpenFileDialog fileDialog = new OpenFileDialog();
                 fileDialog.Multiselect = false;
-                fileDialog.Filter = "ts files (*.ts)|*.ts|All files (*.*)|*.*";
+                fileDialog.Filter = "ts files (*.ts)|*.ts|txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 fileDialog.DefaultExt = ".ts";
                 bool? result = fileDialog.ShowDialog();
 
