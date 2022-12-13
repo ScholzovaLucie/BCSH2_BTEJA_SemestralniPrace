@@ -10,7 +10,7 @@
         vml:ViewModelLocator.AutoHookedUpViewModel = "True"
         mc:Ignorable="d"
         Height="800" Width="1200">
-    
+
     <UserControl.Resources>
         <DataTemplate x:Name="UserControl"  DataType = "{x:Type data:Program}">
             <StackPanel Orientation = "Vertical">
@@ -18,20 +18,27 @@
 
                 <TextBox Text="{Binding Path = CustomConsole, Mode = OneWay}" Width="1050" Height="170" SelectionTextBrush="Gray" Background="Gray" BorderBrush="Gray" Margin="0,10,0,0" Cursor="Arrow" IsReadOnly="True"/>
                 <TextBlock Text="Vstup" />
-                <TextBox Text="{Binding Path = ImportConsole, Mode = TwoWay}" Width="1050" Height="170" SelectionTextBrush="White" Background="Gray" BorderBrush="White" Margin="0,10,0,0" Cursor="Arrow"  IsReadOnly="{Binding  Path = Editable}" SelectionBrush="White" Foreground="White" CaretBrush="White" AcceptsTab="True" />
+                <TextBox Text="{Binding Path = ImportConsole, Mode = TwoWay}" Width="1050" Height="170" SelectionTextBrush="White" Background="Gray" BorderBrush="{Binding  Path = Color}" Margin="0,10,0,0" Cursor="Arrow"  IsReadOnly="{Binding  Path = Editable}" SelectionBrush="White" Foreground="White" CaretBrush="White" AcceptsTab="True" />
             </StackPanel>
         </DataTemplate>
 
     </UserControl.Resources>
 
     <DockPanel Margin="0,0,0,0" >
+        <StackPanel Height="790" Orientation = "Vertical" >
+            <StackPanel Orientation = "Vertical" Width="115" Height="380" HorizontalAlignment="Center" VerticalAlignment="Top">
 
-        <StackPanel Orientation = "Vertical" Width="115" Height="802" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button x:Name="btnImport" Command="{Binding ImportCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Import" MinWidth="90" MinHeight="30" MaxWidth="90" MaxHeight="30" Margin="0,10,0,0"/>
-            <Button x:Name="btnSave" Command="{Binding SaveCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Save" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0" />
-            <Button x:Name="btnRun1" Command="{Binding RunCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Run" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0"/>
-        
+                <Button x:Name="btnImport" Command="{Binding ImportCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Import" MinWidth="90" MinHeight="30" MaxWidth="90" MaxHeight="30" Margin="0,10,0,0"/>
+                <Button x:Name="btnSave" Command="{Binding SaveCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Save" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0" />
+                <Button x:Name="btnClear" Command="{Binding ClearComannd}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Clear" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" Margin="0,10,0,0"/>
+
+            </StackPanel>
+            <StackPanel Orientation = "Vertical" Height="405" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Button x:Name="btnRun1" Command="{Binding RunCommand}" Background="#FFB7D5D4" Height="30" FontFamily="Bahnschrift SemiBold" FontSize="14" FontWeight="Bold" FontStyle="Normal" Width="90" BorderBrush="#FFB7D5D4" Content="Run" MinWidth="90" MaxWidth="90" MinHeight="30" MaxHeight="30" VerticalAlignment="Bottom"/>
+                
+            </StackPanel>
         </StackPanel>
+
 
         <ListBox ItemsSource = "{Binding Programs}" Width="1066" Height="796" Background="#FF488286" BorderBrush="#FF488286" />
 

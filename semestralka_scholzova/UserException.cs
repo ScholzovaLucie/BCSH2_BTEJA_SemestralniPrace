@@ -1,4 +1,5 @@
-﻿using System;
+﻿using semestralka_scholzova.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +9,13 @@ namespace semestralka_scholzova
 {
     public class UserException
     {
-        public UserException() {
-
-            Error er = new Error();
-            er.Show();
-            System.Windows.Threading.Dispatcher.Run();
+        public UserException(Program pr) {
+            pr.CustomConsole += "-> Error: neznámá chyba\n";
+            
         }
-        public UserException(string mess)
+        public UserException(Program pr, string mess)
         {
-            Error er = new Error();
-            er.Show();
-            System.Windows.Threading.Dispatcher.Run();
+            pr.CustomConsole += "-> Error: "+mess+"\n";
         }
     }
 }

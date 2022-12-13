@@ -11,6 +11,7 @@ namespace semestralka_scholzova.Model
         public Token operatorVar;
         public Expression right;
         public Expression left;
+        private Program pr;
 
         public BinaryExpression(Expression left, Token operatorVar, Expression right)
         {
@@ -21,6 +22,7 @@ namespace semestralka_scholzova.Model
 
         public override object Evaluate(ExecutionContext ex)
         {
+            pr = ex.program;
             object result = null;
             object leftnew = left.Evaluate(ex);
             object rightnew = right.Evaluate(ex);
@@ -29,7 +31,7 @@ namespace semestralka_scholzova.Model
             else if (operatorVar.type == EnumTokens.STAR) result = StarEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.SLASH) result = SlashEval(leftnew, rightnew);
             else if (operatorVar.type == EnumTokens.ODD) result = OddEval(leftnew,rightnew);
-            else { UserException exception = new UserException("Not suported"); }
+            else { UserException exception = new UserException(pr,"Not suported"); }
 
             return result;
         }
@@ -45,7 +47,7 @@ namespace semestralka_scholzova.Model
 
         private object PlusEval(object left, object right)
         {
-            if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }
+            if (left.GetType() != right.GetType()) { UserException exception = new UserException(pr,"Nelze sečíst"); }
             if (left.GetType() == right.GetType())
             {
                 if (left.GetType() == typeof(string))
@@ -59,10 +61,10 @@ namespace semestralka_scholzova.Model
 
         private object MinusEval(object left, object right)
         {
-            if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }
+            if (left.GetType() != right.GetType()) { UserException exception = new UserException(pr, "Nelze odečíst"); }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr, "Nelze odečíst"); }
                 if (left.GetType() == typeof(int)) return (int)left - (int)right;
             }
             return null;
@@ -84,7 +86,7 @@ namespace semestralka_scholzova.Model
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr, "Nelze Vynásobit"); }
                 if (left.GetType() == typeof(int)) return (int)left * (int)right;
             }
             return null;
@@ -92,11 +94,18 @@ namespace semestralka_scholzova.Model
 
         private object SlashEval(object left, object right)
         {
-            if (left.GetType() != right.GetType()) { UserException exception = new UserException(); }
+            if (left.GetType() != right.GetType()) { UserException exception = new UserException(pr, "Nelze vydělit"); }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
-                if (left.GetType() == typeof(int)) return (int)left / (int)right;
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr, "Nelze vydělit"); }
+                if (left.GetType() == typeof(int)) { 
+                    if((int)right == 0)
+                    {
+                        UserException exception = new UserException(pr, "Nelze dělit nulou");
+                        return null;
+                    }
+                    return (int)left / (int)right; 
+                }
             }
             return null;
         }

@@ -11,6 +11,7 @@ namespace semestralka_scholzova.Model
         public Token operatorVar;
         public Expression right;
         public Expression left;
+        private Program pr;
 
         public ConditionExpression(Expression left, Token operatorVar, Expression right)
         {
@@ -21,6 +22,7 @@ namespace semestralka_scholzova.Model
 
         public override object Evaluate(ExecutionContext ex)
         {
+            pr = ex.program;
             object result = null;
             UserException exception;
             object leftnew = left.Evaluate(ex);
@@ -43,13 +45,13 @@ namespace semestralka_scholzova.Model
             else if (operatorVar.type == EnumTokens.ODD)
             {
 
-                if (leftnew.GetType() == typeof(string)) {  exception = new UserException(); }
+                if (leftnew.GetType() == typeof(string)) {  exception = new UserException(pr, "Nelze porovnat"); }
 
                 if ((int)leftnew % 2 == 0) return false;
 
                 else return true;
             }
-             exception = new UserException("Not suported");
+             exception = new UserException(pr,"Not suported");
             return false;
         }
 
@@ -57,7 +59,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                UserException exception = new UserException();
+                UserException exception = new UserException(pr, "Nelze porovnat");
             }
             if (left.GetType() == typeof(string))
             {
@@ -74,11 +76,11 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                UserException exception = new UserException();
+                UserException exception = new UserException(pr, "Nelze porovnat");
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr, "Nelze porovnat"); }
                 if (left.GetType() == typeof(int)) return (int)left < (int)right;
             }
             return false;
@@ -88,11 +90,11 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                UserException exception = new UserException();
+                UserException exception = new UserException(pr, "Nelze porovnat");
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr, "Nelze porovnat"); }
                 if (left.GetType() == typeof(int)) return (int)left > (int)right;
             }
             return false;
@@ -102,7 +104,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                UserException exception = new UserException();
+                UserException exception = new UserException(pr, "Nelze porovnat");
             }
             if (left.GetType() == right.GetType())
             {
@@ -121,7 +123,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                UserException exception = new UserException();
+                UserException exception = new UserException(pr, "Nelze porovnat");
             }
             if (left.GetType() == right.GetType())
             {

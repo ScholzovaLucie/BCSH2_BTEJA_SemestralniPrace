@@ -25,6 +25,8 @@ namespace semestralka_scholzova.Model
 
         private bool editable = true;
 
+        private string color = "Gray";
+
         public Program()
         {
             Editable = true;
@@ -87,20 +89,34 @@ namespace semestralka_scholzova.Model
             }
         }
 
+        public string Color
+        {
+            get { return color; }
+            set
+            {
+                if (color != value)
+                {
+                    color = value;
+                    RaisePropertyChanged("Color");
+                }
+            }
+        }
+
 
         public void run()
         {
             ImportConsole = null;
-            CustomConsole = null;
+            CustomConsole = "";
             tokens = new List<Token>();
 
             scanner = new Lexer(readText);
             tokens = scanner.ScanTokens();
 
-            parser = new Parser(tokens);
+            parser = new Parser(tokens, this);
             block = parser.Parse();
 
-            block.execute(this);
+            if (parser.chyba != true) block.execute(this);
+            else CustomConsole = "-> Program ukončen";
 
             ImportConsole = null;
         }

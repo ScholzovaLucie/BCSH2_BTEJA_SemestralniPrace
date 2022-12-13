@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace semestralka_scholzova.Model
 {
@@ -39,52 +40,58 @@ namespace semestralka_scholzova.Model
                     {
                         int value;
                         val = expression.Evaluate(ex);
-
-                        if (var.type.Equals("int") && val.GetType() == typeof(int))
+                        if(val==null)
                         {
-                            var.value = val;
-                        }
-                        else if (var.type.Equals("string") && val.GetType() == typeof(string))
-                        {
-                            var.value = val;
-                        }
-                        else if (var.type.Equals("boolean") && (val.Equals("true") || val.Equals("false")))
-                        {
-                            var.value = val;
-                        }
-                        else if (var.type.Equals("boolean") && ((bool)val == true || (bool)val == false))
-                        {
-                            var.value = val;
+                            ex.program.CustomConsole += "-> Chyba přiřazení";
+                            UserException userEx = new UserException(ex.program); 
                         }
                         else
                         {
-                            foreach (Function func in ex.pc.Functions)
+                            if (var.type.Equals("int") && val.GetType() == typeof(int))
                             {
-                                if (func.iden.Equals(val))
+                                var.value = val;
+                            }
+                            else if (var.type.Equals("string") && val.GetType() == typeof(string))
+                            {
+                                var.value = val;
+                            }
+                            else if (var.type.Equals("boolean") && (val.Equals("true") || val.Equals("false")))
+                            {
+                                var.value = val;
+                            }
+                            else if (var.type.Equals("boolean") && ((bool)val == true || (bool)val == false))
+                            {
+                                var.value = val;
+                            }
+                            else
+                            {
+                                foreach (Function func in ex.pc.Functions)
                                 {
-                                    if (func.returnvalue == null)
+                                    if (func.iden.Equals(val))
                                     {
+                                        if (func.returnvalue == null)
+                                        {
+                                            foreach (Statement st in func.Statements)
+                                            {
+                                                st.Execute(ex);
+                                            }
+                                        }
                                         foreach (Statement st in func.Statements)
                                         {
-                                            st.Execute(ex);
-                                        }
-                                    }
-                                    foreach (Statement st in func.Statements)
-                                    {
-                                        if (st.GetType() == typeof(ReturnStatement) || st.GetType() == typeof(ContinueStatemant) || st.GetType() == typeof(BreakeStatemant))
-                                        
-                                            {
-                                            
-                                            var.value = func.returnvalue;
-                                        }
-                                    }
+                                            if (st.GetType() == typeof(ReturnStatement) || st.GetType() == typeof(ContinueStatemant) || st.GetType() == typeof(BreakeStatemant))
 
+                                            {
+
+                                                var.value = func.returnvalue;
+                                            }
+                                        }
+
+                                    }
                                 }
                             }
 
-
                         }
-
+                       
                     }
 
                 }

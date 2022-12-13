@@ -12,6 +12,7 @@ namespace semestralka_scholzova.Model
         public Token operatorVar;
         public Expression right;
         public Expression left;
+        private Program pr;
 
         public BinaryCondition(Expression left, Token operatorVar, Expression right)
         {
@@ -22,6 +23,7 @@ namespace semestralka_scholzova.Model
 
         public override bool Evaluate(ExecutionContext ex)
         {
+            pr = ex.program;
             object leftnew = left.Evaluate(ex);
             object rightnew = right.Evaluate(ex);
             if (operatorVar.type == EnumTokens.LESS) return LesCompare(leftnew, rightnew);
@@ -39,7 +41,7 @@ namespace semestralka_scholzova.Model
                 if (!leftnew.Equals(rightnew)) return true;
                 else return false;
             }
-            UserException exception = new UserException("Not suported");
+            UserException exception = new UserException(pr,"Not suported");
             return false;
         }
 
@@ -47,7 +49,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                 UserException exception = new UserException();
+                 UserException exception = new UserException(pr);
             }
             if (left.GetType() == typeof(string))
             {
@@ -64,11 +66,11 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                 UserException exception = new UserException();
+                 UserException exception = new UserException(pr);
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr); }
                 if (left.GetType() == typeof(int)) return (int)left < (int)right;
             }
             return false;
@@ -78,11 +80,11 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                 UserException exception = new UserException();
+                 UserException exception = new UserException(pr);
             }
             if (left.GetType() == right.GetType())
             {
-                if (left.GetType() == typeof(string)) { UserException exception = new UserException(); }
+                if (left.GetType() == typeof(string)) { UserException exception = new UserException(pr); }
                 if (left.GetType() == typeof(int)) return (int)left > (int)right;
             }
             return false;
@@ -92,7 +94,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                 UserException exception = new UserException();
+                 UserException exception = new UserException(pr);
             }
             if (left.GetType() == right.GetType())
             {
@@ -111,7 +113,7 @@ namespace semestralka_scholzova.Model
         {
             if (left.GetType() != right.GetType())
             {
-                 UserException exception = new UserException();
+                 UserException exception = new UserException(pr);
             }
             if (left.GetType() == right.GetType())
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace semestralka_scholzova.Model
 {
@@ -17,15 +18,23 @@ namespace semestralka_scholzova.Model
 
         public override void Execute(ExecutionContext ex)
         {
-            object value = expression.Evaluate(ex);
-            if (value != null)
+            try
             {
-                ex.program.CustomConsole += value.ToString();
-                ex.program.CustomConsole += "\n";
+                object value = expression.Evaluate(ex);
+                if (value != null)
+                {
+                    ex.program.CustomConsole += value.ToString();
+                    ex.program.CustomConsole += "\n";
+                }
+                else{
+                    ex.program.CustomConsole += "-> chyba ve výpisu";
+                }
+            }catch(Exception exep)
+            {
+                UserException userExp = new UserException(ex.program,"Cyhba ve vípisu");
+               
             }
-            else{
-                ex.program.CustomConsole += "chyba ve výpisu";
-            }
+           
 
         }
     }

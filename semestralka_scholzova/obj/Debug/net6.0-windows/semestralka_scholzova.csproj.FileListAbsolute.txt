@@ -64,5 +64,3 @@ C:\Users\lucka\Source\Repos\BCSH2_BTEJA_SemestralniPrace\semestralka_scholzova\o
 C:\Users\lucka\Source\Repos\BCSH2_BTEJA_SemestralniPrace\semestralka_scholzova\obj\Debug\net6.0-windows\Views\ProgramView.g.cs
 C:\Users\lucka\Source\Repos\BCSH2_BTEJA_SemestralniPrace\semestralka_scholzova\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\lucka\Source\Repos\BCSH2_BTEJA_SemestralniPrace\semestralka_scholzova\obj\Debug\net6.0-windows\Views\ProgramView.baml
-C:\Users\lucka\Source\Repos\BCSH2_BTEJA_SemestralniPrace\semestralka_scholzova\obj\Debug\net6.0-windows\Error.g.cs
-C:\Users\lucka\Source\Repos\BCSH2_BTEJA_SemestralniPrace\semestralka_scholzova\obj\Debug\net6.0-windows\Error.baml

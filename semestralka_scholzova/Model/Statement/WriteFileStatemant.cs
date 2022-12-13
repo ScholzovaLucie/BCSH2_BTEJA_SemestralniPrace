@@ -23,7 +23,14 @@ namespace semestralka_scholzova.Model
         {
             if (text != null)
             {
-                File.WriteAllText(fileName, text.Evaluate(ex).ToString());
+                try
+                {
+                    File.WriteAllText(fileName, text.Evaluate(ex).ToString());
+                }catch(Exception) {
+                    UserException exep = new UserException(ex.program, "Chyba v zápisu do souboru");
+                  
+                }
+                
             }
                 
              

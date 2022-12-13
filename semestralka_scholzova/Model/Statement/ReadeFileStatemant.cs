@@ -14,6 +14,8 @@ namespace semestralka_scholzova.Model
     {
         private string fileName { get; set; }
         private Token ident { get; set; }
+
+        private Program pr;
         public ReadeFileStatemant(string fileName, Token ident) {
             this.fileName = fileName;
             this.ident = ident;
@@ -22,24 +24,35 @@ namespace semestralka_scholzova.Model
 
         public override void Execute(ExecutionContext ex)
         {
-            
-            foreach (Let var in ex.vars)
+            pr = ex.program;
+            try
             {
-                if (var.ident.Equals(ident.lexeme))
-                {
-                    var.value = File.ReadAllText(fileName);
-                }  
-            }
-            foreach (Function fc in ex.pc.Functions)
-            {
-                foreach (Let var in fc.vars)
+                foreach (Let var in ex.vars)
                 {
                     if (var.ident.Equals(ident.lexeme))
                     {
                         var.value = File.ReadAllText(fileName);
+                    }  
+                }
+                foreach (Function fc in ex.pc.Functions)
+                {
+                    foreach (Let var in fc.vars)
+                    {
+                        if (var.ident.Equals(ident.lexeme))
+                        {
+                            var.value = File.ReadAllText(fileName);
+                        }
                     }
                 }
+                
             }
+            catch (Exception e)
+            {
+                UserException userEx = new UserException(pr,"Chyba ve čtení souboru");
+                
+            }
+            
+            
         }
     }
 

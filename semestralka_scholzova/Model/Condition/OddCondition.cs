@@ -19,7 +19,7 @@ namespace semestralka_scholzova.Model
         {
             object value = right.Evaluate(ex);
 
-            if (value.GetType() == typeof(string)) { UserException exception = new UserException(); }
+            if (value.GetType() == typeof(string)) { UserException exception = new UserException(ex.program); }
 
             if ((int)value % 2 == 0) return false;
 
