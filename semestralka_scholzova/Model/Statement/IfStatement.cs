@@ -5,8 +5,8 @@ namespace semestralka_scholzova.Model
     internal class IfStatement : Statement
     {
         private List<Statement> statement;
-        private List<ElseIfStatement> elseifstatement;
-        private Statement elseStatement;
+        public List<ElseIfStatement> elseifstatement;
+        public ElseStatement elseStatement;
         private Condition con;
 
         public IfStatement(List<Statement> statement, Condition con)
@@ -16,12 +16,20 @@ namespace semestralka_scholzova.Model
             
         }
 
-        public IfStatement(List<Statement> statement, Condition con, List<ElseIfStatement> elseifstatemant, Statement elsestatement)
+        public IfStatement(List<Statement> statement, Condition con, List<ElseIfStatement> elseifstatemant, ElseStatement elsestatement)
         {
             this.statement = statement;
             this.con = con;
             elseifstatement = elseifstatemant;
             elseStatement = elsestatement;
+        }
+        public IfStatement(List<Statement> statement, Condition con, List<ElseIfStatement> elseifstatemant, ElseStatement elsestatement, List<Let> variables)
+        {
+            this.statement = statement;
+            this.con = con;
+            elseifstatement = elseifstatemant;
+            elseStatement = elsestatement;
+            vars = variables;
         }
 
         public override void Execute(ExecutionContext ex)

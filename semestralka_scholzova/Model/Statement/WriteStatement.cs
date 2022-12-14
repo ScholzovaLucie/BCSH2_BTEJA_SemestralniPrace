@@ -27,7 +27,7 @@ namespace semestralka_scholzova.Model
                     ex.program.CustomConsole += "\n";
                 }
                 else{
-                    ex.program.CustomConsole += "-> chyba ve výpisu";
+                    ex.program.CustomConsole += "-> chyba ve výpisu\n";
                 }
             }catch(Exception exep)
             {

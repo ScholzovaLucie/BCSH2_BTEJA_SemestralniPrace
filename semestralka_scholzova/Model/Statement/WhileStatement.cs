@@ -4,7 +4,7 @@ namespace semestralka_scholzova.Model
 {
     internal class WhileStatement : Statement
     {
-        private Statement statement;
+        public Statement statement;
         private Condition con;
 
         public WhileStatement(Statement statement, Condition con)

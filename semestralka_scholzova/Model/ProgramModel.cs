@@ -25,7 +25,7 @@ namespace semestralka_scholzova.Model
 
         private bool editable = true;
 
-        private string color = "Gray";
+        private string color = "{x:Null}";
 
         public Program()
         {
@@ -116,7 +116,7 @@ namespace semestralka_scholzova.Model
             block = parser.Parse();
 
             if (parser.chyba != true) block.execute(this);
-            else CustomConsole = "-> Program ukončen";
+            else CustomConsole += "-> Program ukončen\n";
 
             ImportConsole = null;
         }

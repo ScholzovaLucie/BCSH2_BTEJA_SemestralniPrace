@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace semestralka_scholzova.Views
 {
@@ -29,7 +30,7 @@ namespace semestralka_scholzova.Views
             InitializeComponent();
             this.DataContext = new ViewModel.ProgramViewModel();
         }
-
+      
 
 
     }

@@ -26,27 +26,7 @@ namespace semestralka_scholzova.Model
                 {
                     if (var.ident.Equals(token.lexeme))
                     {
-                        ex.program.Editable = false;
-                        ex.program.Color = "White";
-
-                        ex.program.CustomConsole += "-> Zadej hodnotu \n";
-                        while (true)
-                        {
-                            Thread.Sleep(10);
-                            if (ex.program.ImportConsole != null)
-                            {
-                                break;
-                            }
-
-                        }
-
-
-                        var.value = ex.program.ImportConsole;
-                        ex.program.CustomConsole += "-> Konec načítání \n";
-                        ex.program.Editable = true;
-                        ex.program.Color = "Grey";
-
-                        ex.program.ImportConsole = "-> Konzole ukončena";
+                       var.value = read(ex, var);
                     }
                 }
 
@@ -56,29 +36,56 @@ namespace semestralka_scholzova.Model
                     {
                         if (var.ident.Equals(token.lexeme))
                         {
-                            ex.program.Editable = false;
-                            ex.program.Color = "White";
-
-                            ex.program.CustomConsole += "-> Zadej hodnotu \n";
-                            while (true)
-                            {
-                                Thread.Sleep(10);
-                                if (ex.program.ImportConsole != null)
-                                {
-                                    break;
-                                }
-
-                            }
-
-
-                            var.value = ex.program.ImportConsole;
-                            ex.program.CustomConsole += "-> Konec načítání \n";
-                            ex.program.Editable = true;
-                            ex.program.Color = "Grey";
-
-                            ex.program.ImportConsole = "-> Konzole ukončena";
+                            var.value = read(ex, var);
                         }
                     }
+                }
+
+                foreach (Statement st in ex.statements)
+                {
+                    foreach (Let var in st.vars)
+                    {
+                        if (var.ident.Equals(token.lexeme))
+                        {
+                            var.value = read(ex, var);
+                        }
+                    }
+                        if (st is IfStatement)
+                        {
+                            IfStatement ifs = (IfStatement)st;
+                            foreach (Let var in ifs.elseStatement.statement.vars)
+                            {
+                                if (var.ident.Equals(token.lexeme))
+                                {
+                                    var.value = read(ex, var);
+                                }
+                            }
+
+                            foreach (ElseIfStatement eist in ifs.elseifstatement)
+                            {
+                                foreach (Let var in eist.vars)
+                                {
+                                    if (var.ident.Equals(token.lexeme))
+                                    {
+                                        var.value = read(ex, var);
+                                    }
+                                }
+                            }
+                        }
+
+                    if (st is WhileStatement)
+                    {
+                        WhileStatement ifs = (WhileStatement)st;
+                        foreach (Let var in ifs.statement.vars)
+                        {
+                            if (var.ident.Equals(token.lexeme))
+                            {
+                                var.value = read(ex, var);
+                            }
+                        }
+                    }
+
+
                 }
             }
             catch(Exception e)
@@ -88,6 +95,32 @@ namespace semestralka_scholzova.Model
                 
             }
            
+        }
+
+        private object read(ExecutionContext ex, Let var)
+        {
+            ex.program.Editable = false;
+            ex.program.Color = "White";
+
+            ex.program.CustomConsole += "-> Zadej hodnotu \n";
+            while (true)
+            {
+                Thread.Sleep(10);
+                if (ex.program.ImportConsole != null)
+                {
+                    break;
+                }
+
+            }
+
+
+            var.value = ex.program.ImportConsole;
+            ex.program.CustomConsole += "-> Konec načítání \n";
+            ex.program.Editable = true;
+            ex.program.Color = "{x:Null}";
+
+            ex.program.ImportConsole = null;
+            return var.value;
         }
 
 

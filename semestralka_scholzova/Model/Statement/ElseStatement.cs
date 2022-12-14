@@ -8,7 +8,7 @@ namespace semestralka_scholzova.Model
 {
     public class ElseStatement : Statement
     {
-        private Statement statement;
+        public Statement statement;
 
 
 

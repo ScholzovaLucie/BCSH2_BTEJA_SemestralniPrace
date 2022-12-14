@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:semestralka_scholzova"
         xmlns:views = "clr-namespace:semestralka_scholzova.Views"
         mc:Ignorable="d"
-        Title="Program" Height="800" Width="1200" Background="#FF488286" Cursor="Arrow" ResizeMode="NoResize" MinWidth="1200" MaxWidth="1200" MinHeight="800" MaxHeight="800">
+        Icon="https://cdn-icons-png.flaticon.com/512/1159/1159283.png"
+        Title="Program" Height="800" Width="1200" Background="#202C39" Cursor="Arrow" ResizeMode="NoResize" MinWidth="1200" MaxWidth="1200" MinHeight="800" MaxHeight="800">
     <Grid HorizontalAlignment="Left">
         <views:ProgramView x:Name = "ProgramViewControl" Loaded = "ProgramViewControl_Loaded" RenderTransformOrigin="-0.86,0.489"/>
     </Grid>

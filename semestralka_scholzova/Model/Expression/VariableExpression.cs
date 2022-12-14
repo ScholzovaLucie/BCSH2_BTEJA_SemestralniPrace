@@ -42,9 +42,56 @@ namespace semestralka_scholzova.Model
 
                 }
 
+                foreach (Statement st in ex.statements)
+                {
+                    foreach (Let var in st.vars)
+                    {
+                        if (var.ident.Equals(literal))
+                        {
+                            return var.value;
+                        }
+                    }
+                    if (st is IfStatement)
+                    {
+                        IfStatement ifs = (IfStatement)st;
+                        foreach (Let var in ifs.elseStatement.statement.vars)
+                        {
+                            if (var.ident.Equals(literal))
+                            {
+                                return var.value;
+                            }
+                        }
+                    
+                        foreach (ElseIfStatement eist in ifs.elseifstatement)
+                        {
+                            foreach (Let var in eist.vars)
+                            {
+                                if (var.ident.Equals(literal))
+                                {
+                                    return var.value;
+                                }
+                            }
+                        }
+                    }
+                       
+
+                    if (st is WhileStatement)
+                    {
+                        WhileStatement ifs = (WhileStatement)st;
+                        foreach (Let var in ifs.statement.vars)
+                        {
+                            if (var.ident.Equals(literal))
+                            {
+                                return var.value;
+                            }
+                        }
+                    }
+
+                }
+                
 
             }
-            return literal;
+                    return literal;
         }
     }
 }

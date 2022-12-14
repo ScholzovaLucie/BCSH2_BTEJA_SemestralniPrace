@@ -15,14 +15,17 @@ namespace semestralka_scholzova.Model
 
         public Program program;
 
+        public List<Statement> statements { get; set; }
+
   
 
-        public ExecutionContext(ProgramContext pc, List<Let> vars, ExecutionContext global, Program program)
+        public ExecutionContext(ProgramContext pc, List<Let> vars, ExecutionContext global, List<Statement> st,  Program program)
         {
             this.pc = pc;
             this.vars = vars;
             this.global = global;
             this.program = program;
+            this.statements = st;
         }
 
     }
